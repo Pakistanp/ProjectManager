@@ -4,5 +4,7 @@
     <string name="action_sign_in">Sign in</string>
     <string name="text_login">Login</string>
     <string name="text_password">Password</string>
-    <string name="title_activity_projects">ProjectsActivity</string>
+    <string name="title_activity_projects">Projects</string>
+    <string name="action_logout">Logout</string>
+    <string name="action_new_project">New project</string>
 </resources>
