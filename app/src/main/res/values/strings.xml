@@ -7,5 +7,11 @@
     <string name="title_activity_projects">Projects</string>
     <string name="action_logout">Logout</string>
     <string name="action_new_project">New project</string>
-    <string name="title_activity_new_project">NewProjectActivity</string>
+    <string name="title_activity_new_project">New Project</string>
+    <string name="text_description">Description</string>
+    <string name="text_new_project_name">Name</string>
+    <string name="text_deadline">Deadline</string>
+    <string name="text_id_contributor">Id Contributor</string>
+    <string name="action_add_contributor">Add Contributor</string>
+    <string name="action_create_project">Create Project</string>
 </resources>
