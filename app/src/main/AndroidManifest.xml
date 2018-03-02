@@ -22,7 +22,16 @@
         <activity
             android:name=".ProjectsActivity"
             android:label="@string/title_activity_projects"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".NewProjectActivity"
+            android:label="@string/title_activity_new_project"
+            android:parentActivityName=".ProjectsActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.piotr.projectmanager.ProjectsActivity" />
+        </activity>
     </application>
 
 </manifest>
