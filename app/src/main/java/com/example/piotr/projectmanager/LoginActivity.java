@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
@@ -23,13 +24,25 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void clickSignIn(View view) {
+        final EditText login = (EditText) findViewById(R.id.editTextLogin);
+        final EditText pass = (EditText) findViewById(R.id.editTextPassword);
+
         ConnectionDetector cd = new ConnectionDetector(this);
+        LoginChecker lc = new LoginChecker(this);
+        User u = new User();
+        u.uName = login.getText().toString();
+        u.uPassword = pass.getText().toString();
+
         if(!cd.isConnected()){
             Toast.makeText(LoginActivity.this,"Check your internet connection!",Toast.LENGTH_SHORT).show();
         }
         else{
-            Toast.makeText(LoginActivity.this,"Connection!",Toast.LENGTH_SHORT).show();
+            if(!lc.isCorrect(u)){
+                Toast.makeText(LoginActivity.this,"Wrong login or password!",Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Toast.makeText(LoginActivity.this,"login i haslo dobre",Toast.LENGTH_SHORT).show();
+            }
         }
-
     }
 }
