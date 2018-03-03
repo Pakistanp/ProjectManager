@@ -17,10 +17,11 @@ public class LoginChecker {
         sampleUser.uName = "Piotr";
         sampleUser.uPassword = "12345";
 
-        UsersDatabaseHelper databaseHelper = UsersDatabaseHelper.getsInstance(this.context);
+        UsersDatabaseHelper databaseHelper = UsersDatabaseHelper.getsInstance(context);
 
         databaseHelper.addOrUpdateUser(sampleUser);
-        if(user.uPassword == databaseHelper.getPassword(user)){
+        String test = databaseHelper.getPassword(user);
+        if(user.uPassword.equals(databaseHelper.getPassword(user))){
             return true;
         }
         else{

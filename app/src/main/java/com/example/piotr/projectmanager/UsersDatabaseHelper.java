@@ -47,7 +47,7 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
                 "(" +
                 KEY_USER_ID + " INTEGER PRIMARY KEY," +
                 KEY_USER_NAME + " TEXT," +
-                KEY_USER_PASSWORD + "TEXT" +
+                KEY_USER_PASSWORD + " TEXT" +
                 ")";
         db.execSQL(CREATE_USERS_TABLE);
     }
@@ -63,19 +63,25 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
         User selectUser = new User();
 
         String USER_SELECT_PASSWORD =
-                String.format("SELECT %s FROM %s WHERE %s",
+                String.format("SELECT %s FROM %s WHERE %s.%s='%s'",
                         KEY_USER_PASSWORD,
                         TABLE_USERS,
-                        user.uName);
+                        TABLE_USERS,
+                        KEY_USER_NAME,
+                        user.uName
+                        );
 
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery(USER_SELECT_PASSWORD,null);
         try{
             if(cursor.moveToFirst()){
                 User newUser = new User();
-                newUser.uName = cursor.getString(cursor.getColumnIndex(KEY_USER_NAME));
-                newUser.uPassword = cursor.getString(cursor.getColumnIndex(KEY_USER_PASSWORD));
+                newUser.uName = null;
+                newUser.uPassword = cursor.getString(0);
                 selectUser = newUser;
+            }
+            else{
+                Log.d("Database","nie trafil do ifa");
             }
         }catch (Exception e){
             Log.d("Database","Error while trying to get from database");
@@ -119,7 +125,7 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
                 db.setTransactionSuccessful();
             }
         } catch (Exception e){
-            Log.d("DATABASE", "Error while trying to add update user");
+            Log.d("Database", "Error while trying to add update user");
         }finally {
             db.endTransaction();
         }
