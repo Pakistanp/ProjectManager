@@ -30,7 +30,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class NewProjectActivity extends AppCompatActivity {
-    int totalHeight = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,13 +49,8 @@ public class NewProjectActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                totalHeight+=v.getMeasuredHeight();
                 contributors_list.add(editText.getText().toString());
-                RelativeLayout.LayoutParams mParam = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)30);
-                ViewGroup.LayoutParams params = lv.getLayoutParams();
-                params.height=totalHeight+(lv.getDividerHeight()*(arrayAdapter.getCount()-1));
-                lv.setLayoutParams(params);
-                lv.requestLayout();
+                Component.setListViewHeight(lv);
                 arrayAdapter.notifyDataSetChanged();
             }
         });
