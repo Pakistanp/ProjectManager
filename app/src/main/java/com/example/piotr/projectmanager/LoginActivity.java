@@ -1,5 +1,6 @@
 package com.example.piotr.projectmanager;
 
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -41,7 +42,9 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this,"Wrong login or password!",Toast.LENGTH_SHORT).show();
             }
             else{
-                Toast.makeText(LoginActivity.this,"login i haslo dobre",Toast.LENGTH_SHORT).show();
+                Intent intent;
+                intent = new Intent(LoginActivity.this,ProjectsActivity.class);
+                startActivity(intent);
             }
         }
     }
