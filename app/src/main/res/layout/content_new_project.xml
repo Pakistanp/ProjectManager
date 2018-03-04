@@ -9,78 +9,89 @@
     tools:layout_editor_absoluteY="81dp"
     tools:showIn="@layout/activity_new_project">
 
-    <EditText
-        android:id="@+id/editTextPName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="37dp"
-        android:ems="10"
-        android:hint="@string/text_new_project_name"
-        android:inputType="textPersonName"
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="6dp"
+        android:layout_marginTop="6dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <EditText
-        android:id="@+id/editTextDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:ems="10"
-        android:hint="@string/text_description"
-        android:inputType="textMultiLine"
-        app:layout_constraintStart_toStartOf="@+id/editTextPName"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPName" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/editTextDeadline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:ems="10"
-        android:hint="@string/text_deadline"
-        android:inputType="date"
-        app:layout_constraintStart_toStartOf="@+id/editTextDescription"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDescription" />
+            <EditText
+                android:id="@+id/editTextPName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="37dp"
+                android:ems="10"
+                android:hint="@string/text_new_project_name"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/editTextIdContributor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:ems="10"
-        android:hint="@string/text_id_contributor"
-        android:inputType="number"
-        app:layout_constraintStart_toStartOf="@+id/editTextDeadline"
-        app:layout_constraintTop_toBottomOf="@+id/editTextDeadline" />
+            <EditText
+                android:id="@+id/editTextDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:ems="10"
+                android:hint="@string/text_description"
+                android:inputType="textMultiLine"
+                app:layout_constraintStart_toStartOf="@+id/editTextPName"
+                app:layout_constraintTop_toBottomOf="@+id/editTextPName" />
 
-    <ListView
-        android:id="@+id/listViewContributors"
-        android:layout_width="251dp"
-        android:layout_height="68dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="32dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextIdContributor" />
+            <EditText
+                android:id="@+id/editTextDeadline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:ems="10"
+                android:hint="@string/text_deadline"
+                android:inputType="date"
+                app:layout_constraintStart_toStartOf="@+id/editTextDescription"
+                app:layout_constraintTop_toBottomOf="@+id/editTextDescription" />
 
-    <Button
-        android:id="@+id/buttonAddContributor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="116dp"
-        android:layout_marginTop="25dp"
-        android:text="@string/action_add_contributor"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listViewContributors" />
+            <EditText
+                android:id="@+id/editTextIdContributor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:ems="10"
+                android:hint="@string/text_id_contributor"
+                android:inputType="number"
+                app:layout_constraintStart_toStartOf="@+id/editTextDeadline"
+                app:layout_constraintTop_toBottomOf="@+id/editTextDeadline" />
 
-    <Button
-        android:id="@+id/buttonCreateProject"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="25dp"
-        android:text="@string/action_create_project"
-        app:layout_constraintEnd_toEndOf="@+id/buttonAddContributor"
-        app:layout_constraintTop_toBottomOf="@+id/buttonAddContributor" />
+            <ListView
+                android:id="@+id/listViewContributors"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <Button
+                android:id="@+id/buttonAddContributor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/action_add_contributor" />
+
+            <Button
+                android:id="@+id/buttonCreateProject"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="25dp"
+                android:text="@string/action_create_project"
+                app:layout_constraintEnd_toEndOf="@+id/buttonAddContributor"
+                app:layout_constraintTop_toBottomOf="@+id/buttonAddContributor" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>
