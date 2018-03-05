@@ -88,6 +88,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginTop="25dp"
                 android:text="@string/action_create_project"
+                android:onClick="clickCreateProject"
                 app:layout_constraintEnd_toEndOf="@+id/buttonAddContributor"
                 app:layout_constraintTop_toBottomOf="@+id/buttonAddContributor" />
 

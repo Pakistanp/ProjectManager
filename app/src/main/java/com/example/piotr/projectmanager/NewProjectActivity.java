@@ -15,6 +15,9 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -28,6 +31,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 
 public class NewProjectActivity extends AppCompatActivity {
 
@@ -54,5 +58,24 @@ public class NewProjectActivity extends AppCompatActivity {
                 arrayAdapter.notifyDataSetChanged();
             }
         });
+    }
+
+    public void clickCreateProject(View view) {
+        EditText editText = (EditText) findViewById(R.id.editTextPName);
+        Project newProject = new Project();
+        newProject.Name = editText.getText().toString();
+        editText = (EditText) findViewById(R.id.editTextDescription);
+        newProject.Description = editText.getText().toString();
+        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        editText = (EditText) findViewById(R.id.editTextDeadline);
+
+        try {
+            String date = editText.getText().toString();
+            newProject.Deadline = formatter.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            Log.d("DATE","Problem z konwersja do daty");
+        }
+
     }
 }
