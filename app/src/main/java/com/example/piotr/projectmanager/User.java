@@ -5,6 +5,7 @@ package com.example.piotr.projectmanager;
  */
 
 public class User {
-    public String uName;
+    public String firstName;
+    public String secondName;
     public String uPassword;
 }

@@ -75,6 +75,7 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if(oldVersion != newVersion){
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_PROJECTS);
             onCreate(db);
         }
     }
@@ -87,7 +88,7 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
                         TABLE_USERS,
                         TABLE_USERS,
                         KEY_USER_ID,
-                        user.uName
+                        user.firstName
                         );
 
         SQLiteDatabase db = getReadableDatabase();
@@ -95,7 +96,7 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
         try{
             if(cursor.moveToFirst()){
                 User newUser = new User();
-                newUser.uName = null;
+                newUser.firstName = null;
                 newUser.uPassword = cursor.getString(0);
                 selectUser = newUser;
             }
@@ -119,16 +120,17 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
         db.beginTransaction();
         try{
             ContentValues values = new ContentValues();
-            values.put(KEY_USER_FIRST_NAME, user.uName);
+            values.put(KEY_USER_FIRST_NAME, user.firstName);
+            values.put(KEY_USER_SECOND_NAME, user.secondName);
             values.put(KEY_USER_PASSWORD, user.uPassword);
 
-            int rows = db.update(TABLE_USERS,values,KEY_USER_FIRST_NAME + "=?",new String[]{user.uName});
+            int rows = db.update(TABLE_USERS,values,KEY_USER_FIRST_NAME + "=?",new String[]{user.firstName});
 
             if(rows == 1){
                 String usersSelectQuery = String.format("SELECT %s FROM %s WHERE %s = ?",
                         KEY_USER_ID,TABLE_USERS,KEY_USER_FIRST_NAME
                 );
-             Cursor cursor = db.rawQuery(usersSelectQuery, new String[]{String.valueOf(user.uName)});
+             Cursor cursor = db.rawQuery(usersSelectQuery, new String[]{String.valueOf(user.firstName)});
              try{
                  if(cursor.moveToFirst()){
                      userId = cursor.getInt(0);
