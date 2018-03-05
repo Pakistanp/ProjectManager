@@ -152,4 +152,43 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
         }
         return userId;
     }
+    public long addOrUpdateProject(Project project){
+        SQLiteDatabase db = getWritableDatabase();
+        long projectId = -1;
+        db.beginTransaction();
+        try{
+            ContentValues values = new ContentValues();
+            values.put(KEY_PROJECT_NAME,project.Name);
+            values.put(KEY_PROJECT_DESCRIPTION,project.Description);
+            values.put(KEY_PROJECT_DEADLINE, String.valueOf(project.Deadline));
+            values.put(KEY_PROJECT_OWNER, String.valueOf(project.Owner));
+
+            int rows = db.update(TABLE_PROJECTS,values,KEY_PROJECT_NAME + "=?",new String[]{project.Name});
+
+            if (rows == 1){
+                String projectSelectQuery = String.format("SELECT %s FROM %s WHERE %s = ?",
+                        KEY_PROJECT_ID,TABLE_USERS,KEY_PROJECT_NAME
+                );
+                Cursor cursor = db.rawQuery(projectSelectQuery,new String[]{String.valueOf(project.Name)});
+                try{
+                    if(cursor.moveToFirst()){
+                        projectId = cursor.getInt(0);
+                        db.setTransactionSuccessful();
+                    }
+                }finally {
+                    if(cursor != null && !cursor.isClosed()){
+                        cursor.close();
+                    }
+                }
+            }else{
+                projectId = db.insertOrThrow(TABLE_PROJECTS,null,values);
+                db.setTransactionSuccessful();
+            }
+        }catch (Exception e){
+            Log.d("Database","Error while trying to add update project");
+        }finally {
+            db.endTransaction();
+        }
+        return projectId;
+    }
 }
