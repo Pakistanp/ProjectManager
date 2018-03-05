@@ -15,13 +15,22 @@ import android.util.Log;
 
 public class UsersDatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "usersDatabase";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     private static final String TABLE_USERS = "users";
 
     private static final String KEY_USER_ID = "id";
-    private static final String KEY_USER_NAME = "name";
+    private static final String KEY_USER_FIRST_NAME = "first_name";
+    private static final String KEY_USER_SECOND_NAME = "second_name";
     private static final String KEY_USER_PASSWORD = "password";
+
+    private static final String TABLE_PROJECTS = "users";
+
+    private static final String KEY_PROJECT_ID = "id";
+    private static final String KEY_PROJECT_NAME = "name";
+    private static final String KEY_PROJECT_DESCRIPTION = "description";
+    private static final String KEY_PROJECT_DEADLINE = "deadline";
+    private static final String KEY_PROJECT_OWNER = "owner";
 
     private static UsersDatabaseHelper sInstance;
 
@@ -45,11 +54,21 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_USERS_TABLE = "CREATE TABLE " + TABLE_USERS +
                 "(" +
-                KEY_USER_ID + " INTEGER PRIMARY KEY," +
-                KEY_USER_NAME + " TEXT," +
+                KEY_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                KEY_USER_FIRST_NAME + " TEXT," +
+                KEY_USER_SECOND_NAME + " TEXT," +
                 KEY_USER_PASSWORD + " TEXT" +
                 ")";
+        String CREATE_PROJECTS_TABLE = "CREATE TABLE " + TABLE_PROJECTS +
+                "(" +
+                KEY_PROJECT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                KEY_PROJECT_NAME + " TEXT," +
+                KEY_PROJECT_DESCRIPTION + " TEXT," +
+                KEY_PROJECT_DEADLINE + " DATE," +
+                KEY_PROJECT_OWNER + " INTEGER" +
+                ")";
         db.execSQL(CREATE_USERS_TABLE);
+        db.execSQL(CREATE_PROJECTS_TABLE);
     }
 
     @Override
@@ -67,7 +86,7 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
                         KEY_USER_PASSWORD,
                         TABLE_USERS,
                         TABLE_USERS,
-                        KEY_USER_NAME,
+                        KEY_USER_ID,
                         user.uName
                         );
 
@@ -100,14 +119,14 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
         db.beginTransaction();
         try{
             ContentValues values = new ContentValues();
-            values.put(KEY_USER_NAME, user.uName);
+            values.put(KEY_USER_FIRST_NAME, user.uName);
             values.put(KEY_USER_PASSWORD, user.uPassword);
 
-            int rows = db.update(TABLE_USERS,values,KEY_USER_NAME + "=?",new String[]{user.uName});
+            int rows = db.update(TABLE_USERS,values,KEY_USER_FIRST_NAME + "=?",new String[]{user.uName});
 
             if(rows == 1){
                 String usersSelectQuery = String.format("SELECT %s FROM %s WHERE %s = ?",
-                        KEY_USER_ID,TABLE_USERS,KEY_USER_NAME
+                        KEY_USER_ID,TABLE_USERS,KEY_USER_FIRST_NAME
                 );
              Cursor cursor = db.rawQuery(usersSelectQuery, new String[]{String.valueOf(user.uName)});
              try{

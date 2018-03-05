@@ -77,5 +77,7 @@ public class NewProjectActivity extends AppCompatActivity {
             Log.d("DATE","Problem z konwersja do daty");
         }
 
+        //newProject.Owner = getLoginUser;
+        //addProject;
     }
 }
