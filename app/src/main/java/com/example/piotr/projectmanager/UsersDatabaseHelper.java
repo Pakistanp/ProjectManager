@@ -24,7 +24,7 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_USER_SECOND_NAME = "second_name";
     private static final String KEY_USER_PASSWORD = "password";
 
-    private static final String TABLE_PROJECTS = "users";
+    private static final String TABLE_PROJECTS = "projects";
 
     private static final String KEY_PROJECT_ID = "id";
     private static final String KEY_PROJECT_NAME = "name";

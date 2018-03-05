@@ -61,6 +61,7 @@ public class NewProjectActivity extends AppCompatActivity {
     }
 
     public void clickCreateProject(View view) {
+        UsersDatabaseHelper db = new UsersDatabaseHelper(this);
         EditText editText = (EditText) findViewById(R.id.editTextPName);
         Project newProject = new Project();
         newProject.Name = editText.getText().toString();
@@ -77,7 +78,8 @@ public class NewProjectActivity extends AppCompatActivity {
             Log.d("DATE","Problem z konwersja do daty");
         }
 
-        //newProject.Owner = getLoginUser;
-        //addProject;
+        newProject.Owner = 1;
+        db.addOrUpdateProject(newProject);
+        finish();
     }
 }

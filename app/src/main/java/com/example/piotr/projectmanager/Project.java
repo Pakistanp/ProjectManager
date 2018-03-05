@@ -10,5 +10,5 @@ public class Project {
     public String Name;
     public String Description;
     public Date Deadline;
-    public User Owner;
+    public int Owner;
 }

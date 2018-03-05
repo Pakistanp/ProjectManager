@@ -31,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
         ConnectionDetector cd = new ConnectionDetector(this);
         LoginChecker lc = new LoginChecker(this);
         User u = new User();
-        u.uName = login.getText().toString();
+        u.firstName = login.getText().toString();
         u.uPassword = pass.getText().toString();
 
         if(!cd.isConnected()){
