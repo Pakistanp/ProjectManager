@@ -2,6 +2,9 @@ package com.example.piotr.projectmanager;
 
 import android.content.Context;
 
+import com.example.piotr.projectmanager.Database.UsersDatabaseHelper;
+import com.example.piotr.projectmanager.Model.User;
+
 /**
  * Created by Piotr on 03.03.2018.
  */
@@ -16,13 +19,13 @@ public class LoginChecker {
         User sampleUser = new User();
         sampleUser.firstName = "Piotr";
         sampleUser.secondName = "Pap";
-        sampleUser.uPassword = "12345";
+        sampleUser.Password = "12345";
 
         UsersDatabaseHelper databaseHelper = UsersDatabaseHelper.getsInstance(context);
 
         databaseHelper.addOrUpdateUser(sampleUser);
         //String test = databaseHelper.getPassword(user);
-        if(user.uPassword.equals(databaseHelper.getPassword(user))){
+        if(user.Password.equals(databaseHelper.getPassword(user))){
             return true;
         }
         else{

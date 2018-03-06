@@ -1,4 +1,4 @@
-package com.example.piotr.projectmanager;
+package com.example.piotr.projectmanager.Model;
 
 /**
  * Created by Piotr on 03.03.2018.
@@ -7,5 +7,6 @@ package com.example.piotr.projectmanager;
 public class User {
     public String firstName;
     public String secondName;
-    public String uPassword;
+    public String Password;
+    public String mail;
 }

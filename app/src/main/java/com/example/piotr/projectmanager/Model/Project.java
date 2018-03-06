@@ -1,4 +1,4 @@
-package com.example.piotr.projectmanager;
+package com.example.piotr.projectmanager.Model;
 
 import java.util.Date;
 

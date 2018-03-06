@@ -1,19 +1,22 @@
-package com.example.piotr.projectmanager;
+package com.example.piotr.projectmanager.Activities;
 
 import android.content.Intent;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.CheckBox;
+
+import com.example.piotr.projectmanager.ConnectionDetector;
+import com.example.piotr.projectmanager.LoginChecker;
+import com.example.piotr.projectmanager.R;
+import com.example.piotr.projectmanager.Model.User;
 
 public class LoginActivity extends AppCompatActivity {
+
+    private CheckBox rememberMeCheckBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         LoginChecker lc = new LoginChecker(this);
         User u = new User();
         u.firstName = login.getText().toString();
-        u.uPassword = pass.getText().toString();
+        u.Password = pass.getText().toString();
 
         if(!cd.isConnected()){
             Toast.makeText(LoginActivity.this,"Check your internet connection!",Toast.LENGTH_SHORT).show();

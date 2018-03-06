@@ -1,13 +1,14 @@
-package com.example.piotr.projectmanager;
+package com.example.piotr.projectmanager.Database;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.nfc.Tag;
-import android.renderscript.ScriptIntrinsicYuvToRGB;
 import android.util.Log;
+
+import com.example.piotr.projectmanager.Model.Project;
+import com.example.piotr.projectmanager.Model.User;
 
 /**
  * Created by Piotr on 03.03.2018.
@@ -97,7 +98,7 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
             if(cursor.moveToFirst()){
                 User newUser = new User();
                 newUser.firstName = null;
-                newUser.uPassword = cursor.getString(0);
+                newUser.Password = cursor.getString(0);
                 selectUser = newUser;
             }
             else{
@@ -110,9 +111,8 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
                 cursor.close();
             }
         }
-        return selectUser.uPassword;
+        return selectUser.Password;
     }
-    //tutaj dodac dodawanie nowego projektu/taskow do bazy
 
     public long addOrUpdateUser(User user){
         SQLiteDatabase db = getWritableDatabase();
@@ -122,7 +122,7 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
             ContentValues values = new ContentValues();
             values.put(KEY_USER_FIRST_NAME, user.firstName);
             values.put(KEY_USER_SECOND_NAME, user.secondName);
-            values.put(KEY_USER_PASSWORD, user.uPassword);
+            values.put(KEY_USER_PASSWORD, user.Password);
 
             int rows = db.update(TABLE_USERS,values,KEY_USER_FIRST_NAME + "=?",new String[]{user.firstName});
 

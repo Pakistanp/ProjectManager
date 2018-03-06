@@ -14,4 +14,7 @@
     <string name="text_id_contributor">Id Contributor</string>
     <string name="action_add_contributor">Add Contributor</string>
     <string name="action_create_project">Create Project</string>
+    <string name="text_remember_me">Remember me</string>
+    <string name="action_register">Register</string>
+    <string name="title_activity_register">RegisterActivity</string>
 </resources>
