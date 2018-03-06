@@ -15,15 +15,8 @@ public class LoginChecker {
     public LoginChecker(Context context){this.context = context;}
 
     public boolean isCorrect(User user){
-        //TESTS
-        User sampleUser = new User();
-        sampleUser.firstName = "Piotr";
-        sampleUser.secondName = "Pap";
-        sampleUser.password = "12345";
-
         UsersDatabaseHelper databaseHelper = UsersDatabaseHelper.getsInstance(context);
 
-        databaseHelper.addOrUpdateUser(sampleUser);
         //String test = databaseHelper.getPassword(user);
         if(user.password.equals(databaseHelper.getPassword(user))){
             return true;

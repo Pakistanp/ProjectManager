@@ -30,4 +30,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="text_mail">Mail</string>
+    <string name="text_first_name">First name</string>
+    <string name="text_second_name">Second name</string>
 </resources>

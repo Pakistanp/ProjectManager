@@ -16,7 +16,7 @@ import com.example.piotr.projectmanager.Model.User;
 
 public class UsersDatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "usersDatabase";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     private static final String TABLE_USERS = "users";
 
