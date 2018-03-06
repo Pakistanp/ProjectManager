@@ -19,13 +19,13 @@ public class LoginChecker {
         User sampleUser = new User();
         sampleUser.firstName = "Piotr";
         sampleUser.secondName = "Pap";
-        sampleUser.Password = "12345";
+        sampleUser.password = "12345";
 
         UsersDatabaseHelper databaseHelper = UsersDatabaseHelper.getsInstance(context);
 
         databaseHelper.addOrUpdateUser(sampleUser);
         //String test = databaseHelper.getPassword(user);
-        if(user.Password.equals(databaseHelper.getPassword(user))){
+        if(user.password.equals(databaseHelper.getPassword(user))){
             return true;
         }
         else{

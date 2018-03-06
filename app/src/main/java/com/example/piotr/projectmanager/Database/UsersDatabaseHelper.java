@@ -21,6 +21,7 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_USERS = "users";
 
     private static final String KEY_USER_ID = "id";
+    private static final String KEY_USER_MAIL = "mail";
     private static final String KEY_USER_FIRST_NAME = "first_name";
     private static final String KEY_USER_SECOND_NAME = "second_name";
     private static final String KEY_USER_PASSWORD = "password";
@@ -56,6 +57,7 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
         String CREATE_USERS_TABLE = "CREATE TABLE " + TABLE_USERS +
                 "(" +
                 KEY_USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                KEY_USER_MAIL + " TEXT," +
                 KEY_USER_FIRST_NAME + " TEXT," +
                 KEY_USER_SECOND_NAME + " TEXT," +
                 KEY_USER_PASSWORD + " TEXT" +
@@ -88,8 +90,8 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
                         KEY_USER_PASSWORD,
                         TABLE_USERS,
                         TABLE_USERS,
-                        KEY_USER_ID,
-                        user.firstName
+                        KEY_USER_MAIL,
+                        user.mail
                         );
 
         SQLiteDatabase db = getReadableDatabase();
@@ -97,8 +99,7 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
         try{
             if(cursor.moveToFirst()){
                 User newUser = new User();
-                newUser.firstName = null;
-                newUser.Password = cursor.getString(0);
+                newUser.password = cursor.getString(0);
                 selectUser = newUser;
             }
             else{
@@ -111,7 +112,7 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
                 cursor.close();
             }
         }
-        return selectUser.Password;
+        return selectUser.password;
     }
 
     public long addOrUpdateUser(User user){
@@ -120,17 +121,18 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
         db.beginTransaction();
         try{
             ContentValues values = new ContentValues();
+            values.put(KEY_USER_MAIL, user.mail);
             values.put(KEY_USER_FIRST_NAME, user.firstName);
             values.put(KEY_USER_SECOND_NAME, user.secondName);
-            values.put(KEY_USER_PASSWORD, user.Password);
+            values.put(KEY_USER_PASSWORD, user.password);
 
-            int rows = db.update(TABLE_USERS,values,KEY_USER_FIRST_NAME + "=?",new String[]{user.firstName});
+            int rows = db.update(TABLE_USERS,values,KEY_USER_MAIL + "=?",new String[]{user.firstName});
 
             if(rows == 1){
                 String usersSelectQuery = String.format("SELECT %s FROM %s WHERE %s = ?",
-                        KEY_USER_ID,TABLE_USERS,KEY_USER_FIRST_NAME
+                        KEY_USER_ID,TABLE_USERS,KEY_USER_MAIL
                 );
-             Cursor cursor = db.rawQuery(usersSelectQuery, new String[]{String.valueOf(user.firstName)});
+             Cursor cursor = db.rawQuery(usersSelectQuery, new String[]{String.valueOf(user.mail)});
              try{
                  if(cursor.moveToFirst()){
                      userId = cursor.getInt(0);

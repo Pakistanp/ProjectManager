@@ -7,6 +7,6 @@ package com.example.piotr.projectmanager.Model;
 public class User {
     public String firstName;
     public String secondName;
-    public String Password;
+    public String password;
     public String mail;
 }
