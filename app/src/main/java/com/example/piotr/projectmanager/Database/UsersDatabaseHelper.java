@@ -222,9 +222,13 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
             values.put(KEY_ID_USER,contributor.idUser);
             values.put(KEY_ID_PROJ,contributor.idProj);
 
-            int rows = (int) db.insert(TABLE_CONTRIBUTORS,null,values);
+            idProj = db.insertOrThrow(TABLE_CONTRIBUTORS,null,values);
+            db.setTransactionSuccessful();
+
         }catch (Exception e){
             Log.d("Database","Error while trying to add contributor");
+        }finally {
+            db.endTransaction();
         }
         return idProj;
     }

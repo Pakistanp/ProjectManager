@@ -1,5 +1,6 @@
 package com.example.piotr.projectmanager.Activities;
 
+import android.content.ContentValues;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -9,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -17,6 +19,7 @@ import java.util.ArrayList;
 
 import com.example.piotr.projectmanager.Component;
 import com.example.piotr.projectmanager.Database.UsersDatabaseHelper;
+import com.example.piotr.projectmanager.Model.Contributor;
 import com.example.piotr.projectmanager.Model.Project;
 import com.example.piotr.projectmanager.R;
 
@@ -26,7 +29,7 @@ import java.util.List;
 public class NewProjectActivity extends AppCompatActivity {
 
     private String userMail;
-
+    private List<String> contributors_list = new ArrayList<String>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +40,6 @@ public class NewProjectActivity extends AppCompatActivity {
         userMail = getIntent().getStringExtra("MAIL");
         final ListView lv = (ListView) findViewById(R.id.listViewContributors);
         final Button btn = (Button) findViewById(R.id.buttonAddContributor);
-        final List<String> contributors_list = new ArrayList<String>();
         final EditText editText = (EditText) findViewById(R.id.editTextIdContributor);
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>
                 (this, android.R.layout.simple_list_item_1, contributors_list);
@@ -62,7 +64,7 @@ public class NewProjectActivity extends AppCompatActivity {
         newProject.Description = editText.getText().toString();
         DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         editText = (EditText) findViewById(R.id.editTextDeadline);
-
+        Contributor newContributor = new Contributor();
         try {
             String date = editText.getText().toString();
             newProject.Deadline = formatter.parse(date);
@@ -72,7 +74,11 @@ public class NewProjectActivity extends AppCompatActivity {
         }
 
         newProject.Owner = db.getUserId(userMail);
-        db.addOrUpdateProject(newProject);
+        newContributor.idProj = (int)db.addOrUpdateProject(newProject);
+        for(int i =0;i<contributors_list.size();i++){
+            newContributor.idUser = db.getUserId(contributors_list.get(i));
+            db.addContributor(newContributor);
+        }
         finish();
     }
 }
