@@ -6,8 +6,13 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ListView;
 
+import com.example.piotr.projectmanager.Database.UsersDatabaseHelper;
+import com.example.piotr.projectmanager.Model.Project;
 import com.example.piotr.projectmanager.R;
+
+import java.util.List;
 
 public class ProjectsActivity extends AppCompatActivity {
 
@@ -17,7 +22,13 @@ public class ProjectsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_projects);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        final ListView listView = (ListView) findViewById(R.id.listViewProjects);
         final String userMail = getIntent().getStringExtra("MAIL");
+
+        UsersDatabaseHelper db = new UsersDatabaseHelper(this);
+        List<Project> projects = db.getAllProjects(userMail);
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -27,6 +38,8 @@ public class ProjectsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
     }
 
 }

@@ -11,6 +11,13 @@ import com.example.piotr.projectmanager.Model.Contributor;
 import com.example.piotr.projectmanager.Model.Project;
 import com.example.piotr.projectmanager.Model.User;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 /**
  * Created by Piotr on 03.03.2018.
  */
@@ -259,5 +266,39 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
             }
         }
         return selectId;
+    }
+
+    public List<Project> getAllProjects(String userMail) {
+        List<Project> projects = new ArrayList<>();
+        String PROJECT_ALL_SELECT =
+                String.format("SELECT * FROM %s INNER JOIN %s %s.%s=%s.%s",
+                        TABLE_PROJECTS,
+                        TABLE_USERS,
+                        TABLE_PROJECTS,
+                        KEY_PROJECT_OWNER,
+                        TABLE_USERS,
+                        getUserId(userMail)
+                        );
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(PROJECT_ALL_SELECT,null);
+        try{
+            if(cursor.moveToFirst()){
+                do{
+                    Project newProject = new Project();
+                    newProject.Name = cursor.getString(cursor.getColumnIndex(KEY_PROJECT_NAME));
+                    newProject.Description = cursor.getString(cursor.getColumnIndex(KEY_PROJECT_DESCRIPTION));
+                    DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                    newProject.Deadline = formatter.parse(cursor.getString(cursor.getColumnIndex(KEY_PROJECT_DEADLINE)));
+                    newProject.Owner = cursor.getInt(cursor.getColumnIndex(KEY_PROJECT_OWNER));
+                }while(cursor.moveToNext());
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }finally {
+            if(cursor != null && !cursor.isClosed()){
+                cursor.close();
+            }
+        }
+        return  projects;
     }
 }
