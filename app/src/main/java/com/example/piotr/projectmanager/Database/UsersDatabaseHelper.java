@@ -34,6 +34,11 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_PROJECT_DEADLINE = "deadline";
     private static final String KEY_PROJECT_OWNER = "owner";
 
+    private static final String TABLE_CONTRIBUTORS = "contributors";
+
+    private static final String KEY_ID_USER = "id_user";
+    private static final String KEY_ID_PROJ = "id_project";
+
     private static UsersDatabaseHelper sInstance;
 
     public static synchronized UsersDatabaseHelper getsInstance(Context context){
@@ -68,7 +73,12 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
                 KEY_PROJECT_NAME + " TEXT," +
                 KEY_PROJECT_DESCRIPTION + " TEXT," +
                 KEY_PROJECT_DEADLINE + " DATE," +
-                KEY_PROJECT_OWNER + " INTEGER" +
+                KEY_PROJECT_OWNER + " INTEGER, " +
+                "FOREIGN KEY (" +
+                KEY_PROJECT_OWNER + ") " +
+                "REFERENCES " +
+                TABLE_USERS + "(" +
+                KEY_USER_ID + ")" +
                 ")";
         db.execSQL(CREATE_USERS_TABLE);
         db.execSQL(CREATE_PROJECTS_TABLE);

@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="99dp"
         android:ems="10"
-        android:hint="@string/text_login"
+        android:hint="@string/text_mail"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
