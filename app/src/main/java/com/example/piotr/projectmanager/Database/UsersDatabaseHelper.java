@@ -16,7 +16,7 @@ import com.example.piotr.projectmanager.Model.User;
 
 public class UsersDatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "usersDatabase";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
 
     private static final String TABLE_USERS = "users";
 
@@ -74,26 +74,17 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
                 KEY_PROJECT_DESCRIPTION + " TEXT," +
                 KEY_PROJECT_DEADLINE + " DATE," +
                 KEY_PROJECT_OWNER + " INTEGER, " +
-                "FOREIGN KEY (" +
-                KEY_PROJECT_OWNER + ") " +
-                "REFERENCES " +
-                TABLE_USERS + "(" +
-                KEY_USER_ID + ")" +
+                "FOREIGN KEY (" + KEY_PROJECT_OWNER + ") " +
+                "REFERENCES " + TABLE_USERS + "(" + KEY_USER_ID + ")" +
                 ")";
         String CREATE_CONTRIBUTORS_TABLE = "CREATE TABLE " + TABLE_CONTRIBUTORS +
                 "(" +
-                KEY_ID_USER + "INTEGER," +
-                KEY_ID_PROJ + "INTEGER," +
-                "FOREIGN KEY (" +
-                KEY_ID_USER + ") " +
-                "REFERENCES " +
-                TABLE_USERS + "(" +
-                KEY_USER_ID + ")," +
-                "FOREIGN KEY (" +
-                KEY_ID_PROJ + ") " +
-                "REFERENCES " +
-                TABLE_PROJECTS + "(" +
-                KEY_PROJECT_ID + ")" +
+                KEY_ID_USER + " INTEGER," +
+                KEY_ID_PROJ + " INTEGER," +
+                "FOREIGN KEY (" + KEY_ID_USER + ") " +
+                "REFERENCES " + TABLE_USERS + "(" + KEY_USER_ID + ")," +
+                "FOREIGN KEY (" + KEY_ID_PROJ + ") " +
+                "REFERENCES " + TABLE_PROJECTS + "(" + KEY_PROJECT_ID + ")" +
                 ")";
         db.execSQL(CREATE_USERS_TABLE);
         db.execSQL(CREATE_PROJECTS_TABLE);
