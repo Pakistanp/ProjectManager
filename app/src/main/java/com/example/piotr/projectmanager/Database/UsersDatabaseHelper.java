@@ -211,4 +211,8 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
         }
         return projectId;
     }
+
+    public int getId(String userMail) {
+        return 0;
+    }
 }

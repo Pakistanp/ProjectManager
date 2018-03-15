@@ -17,12 +17,13 @@ public class ProjectsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_projects);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        final String usermail = getIntent().getStringExtra("MAIL");
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ProjectsActivity.this,NewProjectActivity.class);
+                intent.putExtra("MAIL",usermail);
                 startActivity(intent);
             }
         });

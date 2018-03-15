@@ -25,12 +25,15 @@ import java.util.List;
 
 public class NewProjectActivity extends AppCompatActivity {
 
+    private String userMail = getIntent().getStringExtra("MAIL");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_project);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
 
         final ListView lv = (ListView) findViewById(R.id.listViewContributors);
         final Button btn = (Button) findViewById(R.id.buttonAddContributor);
@@ -68,7 +71,7 @@ public class NewProjectActivity extends AppCompatActivity {
             Log.d("DATE","Problem z konwersja do daty");
         }
 
-        newProject.Owner = 1;
+        newProject.Owner = db.getId(userMail);
         db.addOrUpdateProject(newProject);
         finish();
     }
