@@ -213,6 +213,31 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public int getId(String userMail) {
-        return 0;
+        int selectId = 0;
+        String USER_SELECT_ID =
+                String.format("SELECT %s FROM %s WHERE %s.%s='%s'",
+                        KEY_USER_ID,
+                        TABLE_USERS,
+                        TABLE_USERS,
+                        KEY_USER_MAIL,
+                        userMail
+                );
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(USER_SELECT_ID,null);
+        try{
+            if(cursor.moveToFirst()){
+                selectId = cursor.getInt(0);
+            }
+            else{
+                Log.d("Database","nie trafil do ifa");
+            }
+        }catch (Exception e){
+            Log.d("Database","Error while trying to get from database");
+        }finally {
+            if(cursor != null && !cursor.isClosed()){
+                cursor.close();
+            }
+        }
+        return selectId;
     }
 }

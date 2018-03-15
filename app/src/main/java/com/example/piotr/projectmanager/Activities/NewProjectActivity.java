@@ -25,7 +25,7 @@ import java.util.List;
 
 public class NewProjectActivity extends AppCompatActivity {
 
-    private String userMail = getIntent().getStringExtra("MAIL");
+    private String userMail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +34,7 @@ public class NewProjectActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
+        userMail = getIntent().getStringExtra("MAIL");
         final ListView lv = (ListView) findViewById(R.id.listViewContributors);
         final Button btn = (Button) findViewById(R.id.buttonAddContributor);
         final List<String> contributors_list = new ArrayList<String>();
