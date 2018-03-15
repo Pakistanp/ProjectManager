@@ -80,8 +80,24 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
                 TABLE_USERS + "(" +
                 KEY_USER_ID + ")" +
                 ")";
+        String CREATE_CONTRIBUTORS_TABLE = "CREATE TABLE " + TABLE_CONTRIBUTORS +
+                "(" +
+                KEY_ID_USER + "INTEGER," +
+                KEY_ID_PROJ + "INTEGER," +
+                "FOREIGN KEY (" +
+                KEY_ID_USER + ") " +
+                "REFERENCES " +
+                TABLE_USERS + "(" +
+                KEY_USER_ID + ")," +
+                "FOREIGN KEY (" +
+                KEY_ID_PROJ + ") " +
+                "REFERENCES " +
+                TABLE_PROJECTS + "(" +
+                KEY_PROJECT_ID + ")" +
+                ")";
         db.execSQL(CREATE_USERS_TABLE);
         db.execSQL(CREATE_PROJECTS_TABLE);
+        db.execSQL(CREATE_CONTRIBUTORS_TABLE);
     }
 
     @Override
@@ -89,6 +105,7 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
         if(oldVersion != newVersion){
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_PROJECTS);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_CONTRIBUTORS);
             onCreate(db);
         }
     }
