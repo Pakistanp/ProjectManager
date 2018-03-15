@@ -271,13 +271,16 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
     public List<Project> getAllProjects(String userMail) {
         List<Project> projects = new ArrayList<>();
         String PROJECT_ALL_SELECT =
-                String.format("SELECT * FROM %s INNER JOIN %s %s.%s=%s.%s",
+                String.format("SELECT * FROM %s INNER JOIN %s ON %s.%s = %s.%s WHERE %s.%s = '%s'",
                         TABLE_PROJECTS,
                         TABLE_USERS,
                         TABLE_PROJECTS,
                         KEY_PROJECT_OWNER,
                         TABLE_USERS,
-                        getUserId(userMail)
+                        KEY_USER_ID,
+                        TABLE_USERS,
+                        KEY_USER_MAIL,
+                        userMail
                         );
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery(PROJECT_ALL_SELECT,null);
@@ -290,10 +293,53 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
                     DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                     newProject.Deadline = formatter.parse(cursor.getString(cursor.getColumnIndex(KEY_PROJECT_DEADLINE)));
                     newProject.Owner = cursor.getInt(cursor.getColumnIndex(KEY_PROJECT_OWNER));
+                    projects.add(newProject);
                 }while(cursor.moveToNext());
             }
-        } catch (ParseException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            Log.d("Database","Problem in getAllProjects");
+        }finally {
+            if(cursor != null && !cursor.isClosed()){
+                cursor.close();
+            }
+        }
+        PROJECT_ALL_SELECT =
+                String.format("SELECT * FROM %s INNER JOIN %s ON %s.%s = %s.%s" +
+                        " INNER JOIN %s ON %s.%s = %s.%s" +
+                                " WHERE %s.%s = '%s'",
+                        TABLE_PROJECTS,
+                        TABLE_CONTRIBUTORS,
+                        TABLE_PROJECTS,
+                        KEY_PROJECT_ID,
+                        TABLE_CONTRIBUTORS,
+                        KEY_ID_PROJ,
+                        TABLE_USERS,
+                        TABLE_USERS,
+                        KEY_USER_ID,
+                        TABLE_CONTRIBUTORS,
+                        KEY_ID_USER,
+                        TABLE_USERS,
+                        KEY_USER_ID,
+                        getUserId(userMail)
+                );
+        db = getReadableDatabase();
+        cursor = db.rawQuery(PROJECT_ALL_SELECT,null);
+        try{
+            if(cursor.moveToFirst()){
+                do{
+                    Project newProject = new Project();
+                    newProject.Name = cursor.getString(cursor.getColumnIndex(KEY_PROJECT_NAME));
+                    newProject.Description = cursor.getString(cursor.getColumnIndex(KEY_PROJECT_DESCRIPTION));
+                    DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                    newProject.Deadline = formatter.parse(cursor.getString(cursor.getColumnIndex(KEY_PROJECT_DEADLINE)));
+                    newProject.Owner = cursor.getInt(cursor.getColumnIndex(KEY_PROJECT_OWNER));
+                    projects.add(newProject);
+                }while(cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d("Database","Problem in getAllProjects");
         }finally {
             if(cursor != null && !cursor.isClosed()){
                 cursor.close();
