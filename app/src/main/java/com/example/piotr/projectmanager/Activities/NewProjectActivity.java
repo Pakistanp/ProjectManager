@@ -71,7 +71,7 @@ public class NewProjectActivity extends AppCompatActivity {
             Log.d("DATE","Problem z konwersja do daty");
         }
 
-        newProject.Owner = db.getId(userMail);
+        newProject.Owner = db.getUserId(userMail);
         db.addOrUpdateProject(newProject);
         finish();
     }

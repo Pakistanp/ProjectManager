@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:ems="10"
-                android:hint="@string/text_id_contributor"
+                android:hint="@string/text_mail_contributor"
                 android:inputType="number"
                 app:layout_constraintStart_toStartOf="@+id/editTextDeadline"
                 app:layout_constraintTop_toBottomOf="@+id/editTextDeadline" />

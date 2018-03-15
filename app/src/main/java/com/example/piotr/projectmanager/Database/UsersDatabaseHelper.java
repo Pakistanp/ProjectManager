@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.example.piotr.projectmanager.Model.Contributor;
 import com.example.piotr.projectmanager.Model.Project;
 import com.example.piotr.projectmanager.Model.User;
 
@@ -212,7 +213,22 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
         return projectId;
     }
 
-    public int getId(String userMail) {
+    public long addContributor(Contributor contributor){
+        SQLiteDatabase db = getWritableDatabase();
+        long idProj = -1;
+        db.beginTransaction();
+        try{
+            ContentValues values = new ContentValues();
+            values.put(KEY_ID_USER,contributor.idUser);
+            values.put(KEY_ID_PROJ,contributor.idProj);
+
+            int rows = (int) db.insert(TABLE_CONTRIBUTORS,null,values);
+        }catch (Exception e){
+            Log.d("Database","Error while trying to add contributor");
+        }
+        return idProj;
+    }
+    public int getUserId(String userMail) {
         int selectId = 0;
         String USER_SELECT_ID =
                 String.format("SELECT %s FROM %s WHERE %s.%s='%s'",
