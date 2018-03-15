@@ -6,12 +6,15 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.piotr.projectmanager.Component;
 import com.example.piotr.projectmanager.Database.UsersDatabaseHelper;
 import com.example.piotr.projectmanager.Model.Project;
 import com.example.piotr.projectmanager.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectsActivity extends AppCompatActivity {
@@ -28,6 +31,15 @@ public class ProjectsActivity extends AppCompatActivity {
 
         UsersDatabaseHelper db = new UsersDatabaseHelper(this);
         List<Project> projects = db.getAllProjects(userMail);
+        List<String> projects_list = new ArrayList<String>();
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>
+                (this, android.R.layout.simple_list_item_1, projects_list);
+        listView.setAdapter(arrayAdapter);
+        for(int i = 0;i<projects.size();i++){
+            projects_list.add(projects.get(i).Name.toString());
+            Component.setListViewHeight(listView);
+            arrayAdapter.notifyDataSetChanged();
+        }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
