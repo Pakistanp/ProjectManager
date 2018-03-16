@@ -290,9 +290,14 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
                     Project newProject = new Project();
                     newProject.Name = cursor.getString(cursor.getColumnIndex(KEY_PROJECT_NAME));
                     newProject.Description = cursor.getString(cursor.getColumnIndex(KEY_PROJECT_DESCRIPTION));
-                    //DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-                   // newProject.Deadline = formatter.parse(cursor.getString(cursor.getColumnIndex(KEY_PROJECT_DEADLINE)));
                     newProject.Owner = cursor.getInt(cursor.getColumnIndex(KEY_PROJECT_OWNER));
+                    String deadline = (cursor.getString(cursor.getColumnIndex(KEY_PROJECT_DEADLINE)));
+                    DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                    try{
+                        newProject.Deadline = formatter.parse(deadline);
+                    }catch (ParseException e){
+                        Log.e("Parse","Parsing to date failed");
+                    }
                     projects.add(newProject);
                 }while(cursor.moveToNext());
             }
@@ -331,9 +336,14 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
                     Project newProject = new Project();
                     newProject.Name = cursor.getString(cursor.getColumnIndex(KEY_PROJECT_NAME));
                     newProject.Description = cursor.getString(cursor.getColumnIndex(KEY_PROJECT_DESCRIPTION));
-                   // DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-                    //newProject.Deadline = formatter.parse(cursor.getString(cursor.getColumnIndex(KEY_PROJECT_DEADLINE)));
                     newProject.Owner = cursor.getInt(cursor.getColumnIndex(KEY_PROJECT_OWNER));
+                    String deadline = (cursor.getString(cursor.getColumnIndex(KEY_PROJECT_DEADLINE)));
+                    DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+                    try{
+                        newProject.Deadline = formatter.parse(deadline);
+                    }catch (ParseException e){
+                        Log.e("Parse","Parsing to date failed");
+                    }
                     projects.add(newProject);
                 }while(cursor.moveToNext());
             }
