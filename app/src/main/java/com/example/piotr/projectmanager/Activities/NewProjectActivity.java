@@ -62,17 +62,9 @@ public class NewProjectActivity extends AppCompatActivity {
         newProject.Name = editText.getText().toString();
         editText = (EditText) findViewById(R.id.editTextDescription);
         newProject.Description = editText.getText().toString();
-        DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         editText = (EditText) findViewById(R.id.editTextDeadline);
+        newProject.Deadline = editText.getText().toString();
         Contributor newContributor = new Contributor();
-        try {
-            String date = editText.getText().toString();
-            newProject.Deadline = formatter.parse(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            Log.d("DATE","Problem z konwersja do daty");
-        }
-
         newProject.Owner = db.getUserId(userMail);
         newContributor.idProj = (int)db.addOrUpdateProject(newProject);
         for(int i =0;i<contributors_list.size();i++){

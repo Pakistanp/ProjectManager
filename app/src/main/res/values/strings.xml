@@ -9,7 +9,7 @@
     <string name="title_activity_new_project">New Project</string>
     <string name="text_description">Description</string>
     <string name="text_new_project_name">Name</string>
-    <string name="text_deadline">Deadline(dd/mm/yyyy)</string>
+    <string name="text_deadline">Deadline(dd-mm-yyyy)</string>
     <string name="text_mail_contributor">Contributor Mail</string>
     <string name="text_id_contributor">Id Contributor</string>
     <string name="action_add_contributor">Add Contributor</string>

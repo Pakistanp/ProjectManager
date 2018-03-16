@@ -9,6 +9,6 @@ import java.util.Date;
 public class Project {
     public String Name;
     public String Description;
-    public Date Deadline;
+    public String Deadline;
     public int Owner;
 }

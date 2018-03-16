@@ -80,7 +80,7 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
                 KEY_PROJECT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 KEY_PROJECT_NAME + " TEXT," +
                 KEY_PROJECT_DESCRIPTION + " TEXT," +
-                KEY_PROJECT_DEADLINE + " DATE," +
+                KEY_PROJECT_DEADLINE + " TEXT," +
                 KEY_PROJECT_OWNER + " INTEGER, " +
                 "FOREIGN KEY (" + KEY_PROJECT_OWNER + ") " +
                 "REFERENCES " + TABLE_USERS + "(" + KEY_USER_ID + ")" +
@@ -209,6 +209,11 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
                     }
                 }
             }else{
+                /*String date ="INSERT OR REPLACE INTO " +
+                        TABLE_PROJECTS +
+                        " (" + KEY_PROJECT_DEADLINE + ") VALUES ( datetime( '" +
+                        values.get(KEY_PROJECT_DEADLINE) + "','unixepoch'))";
+                db.execSQL(date);*/
                 projectId = db.insertOrThrow(TABLE_PROJECTS,null,values);
                 db.setTransactionSuccessful();
             }
@@ -291,13 +296,7 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
                     newProject.Name = cursor.getString(cursor.getColumnIndex(KEY_PROJECT_NAME));
                     newProject.Description = cursor.getString(cursor.getColumnIndex(KEY_PROJECT_DESCRIPTION));
                     newProject.Owner = cursor.getInt(cursor.getColumnIndex(KEY_PROJECT_OWNER));
-                    String deadline = (cursor.getString(cursor.getColumnIndex(KEY_PROJECT_DEADLINE)));
-                    DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-                    try{
-                        newProject.Deadline = formatter.parse(deadline);
-                    }catch (ParseException e){
-                        Log.e("Parse","Parsing to date failed");
-                    }
+                    newProject.Deadline = cursor.getString(cursor.getColumnIndex(KEY_PROJECT_DEADLINE));
                     projects.add(newProject);
                 }while(cursor.moveToNext());
             }
@@ -337,13 +336,7 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
                     newProject.Name = cursor.getString(cursor.getColumnIndex(KEY_PROJECT_NAME));
                     newProject.Description = cursor.getString(cursor.getColumnIndex(KEY_PROJECT_DESCRIPTION));
                     newProject.Owner = cursor.getInt(cursor.getColumnIndex(KEY_PROJECT_OWNER));
-                    String deadline = (cursor.getString(cursor.getColumnIndex(KEY_PROJECT_DEADLINE)));
-                    DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-                    try{
-                        newProject.Deadline = formatter.parse(deadline);
-                    }catch (ParseException e){
-                        Log.e("Parse","Parsing to date failed");
-                    }
+                    newProject.Deadline = cursor.getString(cursor.getColumnIndex(KEY_PROJECT_DEADLINE));
                     projects.add(newProject);
                 }while(cursor.moveToNext());
             }
