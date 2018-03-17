@@ -129,7 +129,7 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
                 selectUser = newUser;
             }
             else{
-                Log.d("Database","nie trafil do ifa");
+                Log.d("Database","nie trafil do ifa pass");
             }
         }catch (Exception e){
             Log.d("Database","Error while trying to get from database");
@@ -261,7 +261,7 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
                 selectId = cursor.getInt(0);
             }
             else{
-                Log.d("Database","nie trafil do ifa");
+                Log.d("Database","nie trafil do ifa user");
             }
         }catch (Exception e){
             Log.d("Database","Error while trying to get from database");
