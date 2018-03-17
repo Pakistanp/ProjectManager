@@ -293,6 +293,7 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
             if(cursor.moveToFirst()){
                 do{
                     Project newProject = new Project();
+                    newProject.Id = cursor.getInt(cursor.getColumnIndex(KEY_PROJECT_ID));
                     newProject.Name = cursor.getString(cursor.getColumnIndex(KEY_PROJECT_NAME));
                     newProject.Description = cursor.getString(cursor.getColumnIndex(KEY_PROJECT_DESCRIPTION));
                     newProject.Owner = cursor.getInt(cursor.getColumnIndex(KEY_PROJECT_OWNER));
@@ -333,6 +334,7 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
             if(cursor.moveToFirst()){
                 do{
                     Project newProject = new Project();
+                    newProject.Id = cursor.getInt(cursor.getColumnIndex(KEY_PROJECT_ID));
                     newProject.Name = cursor.getString(cursor.getColumnIndex(KEY_PROJECT_NAME));
                     newProject.Description = cursor.getString(cursor.getColumnIndex(KEY_PROJECT_DESCRIPTION));
                     newProject.Owner = cursor.getInt(cursor.getColumnIndex(KEY_PROJECT_OWNER));

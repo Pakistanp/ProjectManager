@@ -7,6 +7,7 @@ import java.util.Date;
  */
 
 public class Project {
+    public int Id;
     public String Name;
     public String Description;
     public String Deadline;
