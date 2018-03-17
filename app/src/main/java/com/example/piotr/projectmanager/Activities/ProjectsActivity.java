@@ -110,12 +110,14 @@ public class ProjectsActivity extends AppCompatActivity {
         UsersDatabaseHelper db = new UsersDatabaseHelper(this);
 
         List<Project> projects = db.getAllProjects(userMail);
-        Collections.sort(projects, new Comparator<Project>() {
+        /*Collections.sort(projects, new Comparator<Project>() {
             @Override
             public int compare(final Project o1,final Project o2) {
                 return o1.Id > o2.Id ? -1 : (o1.Id < o2.Id) ? 1 : 0;
             }
-        });
+        });*/
+//        int test = projects.get(1).Id;
+ //       int test2 =projects.get(0).Id;
         projects_list = new ArrayList<String>();
         final List<Integer> projects_id = new ArrayList<Integer>();
         arrayAdapter = new ArrayAdapter<String>
@@ -131,7 +133,7 @@ public class ProjectsActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(ProjectsActivity.this,projects_id.get((int)id).toString(),Toast.LENGTH_LONG).show();
+                Toast.makeText(ProjectsActivity.this,""+position+"",Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(ProjectsActivity.this,ProjectMoreActivity.class);
                 startActivity(intent);
             }
@@ -145,5 +147,13 @@ public class ProjectsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        /*settings.edit().clear();
+        settings.edit().commit();
+        editor.clear();
+        editor.commit();*/
     }
 }

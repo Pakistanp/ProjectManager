@@ -276,7 +276,17 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
     public List<Project> getAllProjects(String userMail) {
         List<Project> projects = new ArrayList<>();
         String PROJECT_ALL_SELECT =
-                String.format("SELECT * FROM %s INNER JOIN %s ON %s.%s = %s.%s WHERE %s.%s = '%s'",
+                String.format("SELECT %s.%s, %s.%s, %s.%s, %s.%s, %s.%s FROM %s INNER JOIN %s ON %s.%s = %s.%s WHERE %s.%s = '%s'",
+                        TABLE_PROJECTS,
+                        KEY_PROJECT_ID,
+                        TABLE_PROJECTS,
+                        KEY_PROJECT_OWNER,
+                        TABLE_PROJECTS,
+                        KEY_PROJECT_NAME,
+                        TABLE_PROJECTS,
+                        KEY_PROJECT_DESCRIPTION,
+                        TABLE_PROJECTS,
+                        KEY_PROJECT_DEADLINE,
                         TABLE_PROJECTS,
                         TABLE_USERS,
                         TABLE_PROJECTS,
@@ -310,9 +320,19 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
             }
         }
         PROJECT_ALL_SELECT =
-                String.format("SELECT * FROM %s INNER JOIN %s ON %s.%s = %s.%s" +
+                String.format("SELECT %s.%s, %s.%s, %s.%s, %s.%s, %s.%s FROM %s INNER JOIN %s ON %s.%s = %s.%s" +
                         " INNER JOIN %s ON %s.%s = %s.%s" +
                                 " WHERE %s.%s = '%s'",
+                        TABLE_PROJECTS,
+                        KEY_PROJECT_ID,
+                        TABLE_PROJECTS,
+                        KEY_PROJECT_OWNER,
+                        TABLE_PROJECTS,
+                        KEY_PROJECT_NAME,
+                        TABLE_PROJECTS,
+                        KEY_PROJECT_DESCRIPTION,
+                        TABLE_PROJECTS,
+                        KEY_PROJECT_DEADLINE,
                         TABLE_PROJECTS,
                         TABLE_CONTRIBUTORS,
                         TABLE_PROJECTS,
