@@ -139,6 +139,8 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_PROJECTS);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_CONTRIBUTORS);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_TASKS);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_PROJ_TASK);
             onCreate(db);
         }
     }
