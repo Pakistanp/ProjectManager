@@ -327,12 +327,12 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
                         TABLE_USERS,
                         KEY_USER_MAIL,
                         userMail
-                        );
+                );
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery(PROJECT_ALL_SELECT,null);
-        try{
-            if(cursor.moveToFirst()){
-                do{
+        Cursor cursor = db.rawQuery(PROJECT_ALL_SELECT, null);
+        try {
+            if (cursor.moveToFirst()) {
+                do {
                     Project newProject = new Project();
                     newProject.Id = cursor.getInt(cursor.getColumnIndex(KEY_PROJECT_ID));
                     newProject.Name = cursor.getString(cursor.getColumnIndex(KEY_PROJECT_NAME));
@@ -340,19 +340,19 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
                     newProject.Owner = cursor.getInt(cursor.getColumnIndex(KEY_PROJECT_OWNER));
                     newProject.Deadline = cursor.getString(cursor.getColumnIndex(KEY_PROJECT_DEADLINE));
                     projects.add(newProject);
-                }while(cursor.moveToNext());
+                } while (cursor.moveToNext());
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Log.d("Database","Problem in getAllProjects");
-        }finally {
-            if(cursor != null && !cursor.isClosed()){
+            Log.d("Database", "Problem in getAllProjects");
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
             }
         }
         PROJECT_ALL_SELECT =
                 String.format("SELECT %s.%s, %s.%s, %s.%s, %s.%s, %s.%s FROM %s INNER JOIN %s ON %s.%s = %s.%s" +
-                        " INNER JOIN %s ON %s.%s = %s.%s" +
+                                " INNER JOIN %s ON %s.%s = %s.%s" +
                                 " WHERE %s.%s = '%s'",
                         TABLE_PROJECTS,
                         KEY_PROJECT_ID,
@@ -380,10 +380,10 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
                         getUserId(userMail)
                 );
         db = getReadableDatabase();
-        cursor = db.rawQuery(PROJECT_ALL_SELECT,null);
-        try{
-            if(cursor.moveToFirst()){
-                do{
+        cursor = db.rawQuery(PROJECT_ALL_SELECT, null);
+        try {
+            if (cursor.moveToFirst()) {
+                do {
                     Project newProject = new Project();
                     newProject.Id = cursor.getInt(cursor.getColumnIndex(KEY_PROJECT_ID));
                     newProject.Name = cursor.getString(cursor.getColumnIndex(KEY_PROJECT_NAME));
@@ -391,16 +391,16 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
                     newProject.Owner = cursor.getInt(cursor.getColumnIndex(KEY_PROJECT_OWNER));
                     newProject.Deadline = cursor.getString(cursor.getColumnIndex(KEY_PROJECT_DEADLINE));
                     projects.add(newProject);
-                }while(cursor.moveToNext());
+                } while (cursor.moveToNext());
             }
         } catch (Exception e) {
             e.printStackTrace();
-            Log.d("Database","Problem in getAllProjects");
-        }finally {
-            if(cursor != null && !cursor.isClosed()){
+            Log.d("Database", "Problem in getAllProjects");
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
                 cursor.close();
             }
         }
-        return  projects;
+        return projects;
     }
 }
