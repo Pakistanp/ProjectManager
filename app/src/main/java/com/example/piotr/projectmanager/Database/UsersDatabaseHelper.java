@@ -47,6 +47,19 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_ID_USER = "id_user";
     private static final String KEY_ID_PROJ = "id_project";
 
+    private static final String TABLE_TASKS = "tasks";
+
+    private static final String KEY_TASK_ID = "id";
+    private static final String KEY_TASK_NAME = "name";
+    private static final String KEY_TASK_DESCRIPTION = "description";
+    private static final String KEY_TASK_STATUS = "status";
+    private static final String KEY_TASK_WHO_FINISH = "who_finish";
+
+    private static final String TABLE_PROJ_TASK = "proj_task";
+
+    private static final String KEY_PROJ_TASK_ID_TASK = "id_task";
+    private static final String KEY_PROJ_TASK_ID_PROJ = "id_proj";
+
     private static UsersDatabaseHelper sInstance;
 
     public static synchronized UsersDatabaseHelper getsInstance(Context context){
@@ -94,9 +107,30 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY (" + KEY_ID_PROJ + ") " +
                 "REFERENCES " + TABLE_PROJECTS + "(" + KEY_PROJECT_ID + ")" +
                 ")";
+        String CREATE_TASKS_TABLE = "CREATE TABLE " + TABLE_TASKS +
+                "(" +
+                KEY_TASK_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                KEY_TASK_NAME + " TEXT," +
+                KEY_TASK_DESCRIPTION + " TEXT," +
+                KEY_TASK_STATUS + " TEXT," +
+                KEY_TASK_WHO_FINISH + " INTEGER, " +
+                "FOREIGN KEY (" + KEY_TASK_WHO_FINISH + ") " +
+                "REFERENCES " + TABLE_USERS + "(" + KEY_USER_ID + ")" +
+                ")";
+        String CREATE_PROJ_TASK_TABLE = "CREATE TABLE " + TABLE_PROJ_TASK +
+                "(" +
+                KEY_PROJ_TASK_ID_TASK + " INTEGER," +
+                KEY_PROJ_TASK_ID_PROJ + " INTEGER," +
+                "FOREIGN KEY (" + KEY_PROJ_TASK_ID_TASK + ") " +
+                "REFERENCES " + TABLE_TASKS + "(" + KEY_TASK_ID + ")," +
+                "FOREIGN KEY (" + KEY_PROJ_TASK_ID_PROJ + ") " +
+                "REFERENCES " + TABLE_PROJECTS + "(" + KEY_PROJECT_ID + ")" +
+                ")";
         db.execSQL(CREATE_USERS_TABLE);
         db.execSQL(CREATE_PROJECTS_TABLE);
         db.execSQL(CREATE_CONTRIBUTORS_TABLE);
+        db.execSQL(CREATE_TASKS_TABLE);
+        db.execSQL(CREATE_PROJ_TASK_TABLE);
     }
 
     @Override
@@ -209,11 +243,6 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
                     }
                 }
             }else{
-                /*String date ="INSERT OR REPLACE INTO " +
-                        TABLE_PROJECTS +
-                        " (" + KEY_PROJECT_DEADLINE + ") VALUES ( datetime( '" +
-                        values.get(KEY_PROJECT_DEADLINE) + "','unixepoch'))";
-                db.execSQL(date);*/
                 projectId = db.insertOrThrow(TABLE_PROJECTS,null,values);
                 db.setTransactionSuccessful();
             }
