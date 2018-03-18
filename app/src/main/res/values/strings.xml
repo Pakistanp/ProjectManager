@@ -23,4 +23,5 @@
     <string name="text_first_name">First name</string>
     <string name="text_second_name">Second name</string>
     <string name="title_activity_project_more">ProjectMoreActivity</string>
+    <string name="text_progress">Progress</string>
 </resources>

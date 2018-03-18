@@ -6,6 +6,9 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.piotr.projectmanager.Model.Project;
 import com.example.piotr.projectmanager.R;
@@ -20,7 +23,18 @@ public class ProjectMoreActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         final Project project =new Project();
         project.Name = getIntent().getStringExtra("PROJECT_NAME");
+        project.Deadline = getIntent().getStringExtra("PROJECT_DEADLINE");
+        project.Description = getIntent().getStringExtra("PROJECT_DESC");
+
         setTitle(project.Name);
+
+        final TextView desc = (TextView) findViewById(R.id.textViewDescriptionText);
+        final TextView deadline = (TextView) findViewById(R.id.textViewDeadlineDate);
+        final ProgressBar progress = (ProgressBar) findViewById(R.id.progressBar);
+
+        desc.setText(project.Description);
+        deadline.setText(project.Deadline);
+        progress.setProgress(20);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
