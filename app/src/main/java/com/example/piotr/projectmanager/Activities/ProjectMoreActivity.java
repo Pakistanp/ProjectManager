@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.example.piotr.projectmanager.Model.Project;
 import com.example.piotr.projectmanager.R;
 
 public class ProjectMoreActivity extends AppCompatActivity {
@@ -17,6 +18,10 @@ public class ProjectMoreActivity extends AppCompatActivity {
         setContentView(R.layout.activity_project_more);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        final Project project =new Project();
+        project.Name = getIntent().getStringExtra("PROJECT_NAME");
+        setTitle(project.Name);
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
