@@ -57,6 +57,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.piotr.projectmanager.Activities.ProjectsActivity" />
         </activity>
+        <activity
+            android:name=".Activities.NewTaskActivity"
+            android:label="@string/title_activity_new_task"
+            android:parentActivityName=".Activities.ProjectMoreActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.piotr.projectmanager.Activities.ProjectMoreActivity" />
+        </activity>
     </application>
 
 </manifest>
