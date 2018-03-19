@@ -16,7 +16,7 @@
     <string name="action_create_project">Create Project</string>
     <string name="text_remember_me">Remember me</string>
     <string name="action_register">Register</string>
-    <string name="title_activity_register">RegisterActivity</string>
+    <string name="title_activity_register">Register</string>
     <string name="title_activity_login_activity">Sign in</string>
 
     <string name="text_mail">Mail</string>

@@ -51,6 +51,7 @@ public class NewProjectActivity extends AppCompatActivity {
                 contributors_list.add(editText.getText().toString());
                 Component.setListViewHeight(lv);
                 arrayAdapter.notifyDataSetChanged();
+                editText.setText("");
             }
         });
     }
