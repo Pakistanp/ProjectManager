@@ -1,5 +1,6 @@
 package com.example.piotr.projectmanager.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -21,6 +22,11 @@ public class ProjectMoreActivity extends AppCompatActivity {
         setContentView(R.layout.activity_project_more);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         final Project project =new Project();
         project.Name = getIntent().getStringExtra("PROJECT_NAME");
         project.Deadline = getIntent().getStringExtra("PROJECT_DEADLINE");
@@ -40,11 +46,10 @@ public class ProjectMoreActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(ProjectMoreActivity.this,NewTaskActivity.class);
+                startActivity(intent);
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-
 }
