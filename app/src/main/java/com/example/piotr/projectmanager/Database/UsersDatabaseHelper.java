@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.example.piotr.projectmanager.Model.Contributor;
+import com.example.piotr.projectmanager.Model.Proj_Task;
 import com.example.piotr.projectmanager.Model.Project;
 import com.example.piotr.projectmanager.Model.Task;
 import com.example.piotr.projectmanager.Model.User;
@@ -443,5 +444,25 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
             db.endTransaction();
         }
         return taskId;
+    }
+
+    public long addProjTask(Proj_Task proj_task){
+        SQLiteDatabase db = getWritableDatabase();
+        long idTask = -1;
+        db.beginTransaction();
+        try{
+            ContentValues values = new ContentValues();
+            values.put(KEY_PROJ_TASK_ID_TASK,proj_task.getId_task());
+            values.put(KEY_PROJ_TASK_ID_PROJ,proj_task.getId_proj());
+
+            idTask = db.insertOrThrow(TABLE_PROJ_TASK,null,values);
+            db.setTransactionSuccessful();
+
+        }catch (Exception e){
+            Log.d("Database","Error while trying to add contributor");
+        }finally {
+            db.endTransaction();
+        }
+        return idTask;
     }
 }

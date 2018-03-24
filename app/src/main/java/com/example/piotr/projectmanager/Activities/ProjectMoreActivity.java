@@ -31,6 +31,7 @@ public class ProjectMoreActivity extends AppCompatActivity {
         project.setName(getIntent().getStringExtra("PROJECT_NAME"));
         project.setDeadline(getIntent().getStringExtra("PROJECT_DEADLINE"));
         project.setDescription(getIntent().getStringExtra("PROJECT_DESC"));
+        project.setId(getIntent().getIntExtra("PROJECT_ID",-1));
 
         setTitle(project.getName());
 
@@ -47,6 +48,7 @@ public class ProjectMoreActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ProjectMoreActivity.this,NewTaskActivity.class);
+                intent.putExtra("PROJECT_ID",project.getId());
                 startActivity(intent);
             }
         });
