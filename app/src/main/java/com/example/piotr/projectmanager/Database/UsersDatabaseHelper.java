@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.example.piotr.projectmanager.Model.Contributor;
 import com.example.piotr.projectmanager.Model.Project;
+import com.example.piotr.projectmanager.Model.Task;
 import com.example.piotr.projectmanager.Model.User;
 
 import java.text.DateFormat;
@@ -231,7 +232,7 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
 
             if (rows == 1){
                 String projectSelectQuery = String.format("SELECT %s FROM %s WHERE %s = ?",
-                        KEY_PROJECT_ID,TABLE_USERS,KEY_PROJECT_NAME
+                        KEY_PROJECT_ID,TABLE_PROJECTS,KEY_PROJECT_NAME
                 );
                 Cursor cursor = db.rawQuery(projectSelectQuery,new String[]{String.valueOf(project.Name)});
                 try{
@@ -402,5 +403,45 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
             }
         }
         return projects;
+    }
+    public long addOrUpdateTask(Task task){
+        SQLiteDatabase db = getWritableDatabase();
+        long taskId = -1;
+        db.beginTransaction();
+        try{
+            ContentValues values = new ContentValues();
+            values.put(KEY_TASK_NAME,task.Name);
+            values.put(KEY_TASK_DESCRIPTION,task.Description);
+            values.put(KEY_TASK_STATUS,task.Status);
+            values.put(KEY_TASK_WHO_FINISH,task.WhoFinish);
+
+            int rows = db.update(TABLE_TASKS,values,KEY_TASK_NAME +  "=?", new String[]{task.Name});
+
+            if(rows == 1){
+                String taskSelectQuery = String.format("SELECT %s FROM %s WHERE %s = ?",
+                        KEY_TASK_ID,TABLE_TASKS,KEY_TASK_NAME);
+                Cursor cursor = db.rawQuery(taskSelectQuery,new String[]{String.valueOf(task.Name)});
+                try{
+                    if(cursor.moveToFirst()){
+                        taskId = cursor.getInt(0);
+                        db.setTransactionSuccessful();
+                    }
+                }finally {
+                    if (cursor != null && !cursor.isClosed()){
+                        cursor.close();
+                    }
+                }
+            }
+            else{
+                taskId = db.insertOrThrow(TABLE_TASKS,null,values);
+                db.setTransactionSuccessful();
+            }
+        }catch (Exception  e){
+            Log.d("Database", "Error while try add or update task");
+        }
+        finally {
+            db.endTransaction();
+        }
+        return taskId;
     }
 }
