@@ -113,7 +113,7 @@ public class ProjectsActivity extends AppCompatActivity {
         Collections.sort(projects, new Comparator<Project>() {
             @Override
             public int compare(final Project o1,final Project o2) {
-                return o1.Deadline.compareTo(o2.Deadline);
+                return o1.getDeadline().compareTo(o2.getDeadline());
             }
         });
         projects_list = new ArrayList<String>();
@@ -122,8 +122,8 @@ public class ProjectsActivity extends AppCompatActivity {
                 (this, android.R.layout.simple_list_item_1, projects_list);
         listView.setAdapter(arrayAdapter);
         for(int i = 0;i<projects.size();i++){
-            projects_list.add(projects.get(i).Name.toString());
-            projects_id.add(projects.get(i).Id);
+            projects_list.add(projects.get(i).getName().toString());
+            projects_id.add(projects.get(i).getId());
             Component.setListViewHeight(listView);
             arrayAdapter.notifyDataSetChanged();
         }
@@ -136,11 +136,11 @@ public class ProjectsActivity extends AppCompatActivity {
                 for(int i = 0;i<projects.size();i++){
                     if(projects_id.get(i) == projects_id.get(position)){
 
-                        intent.putExtra("PROJECT_ID",projects.get(i).Id);
-                        intent.putExtra("PROJECT_NAME",projects.get(i).Name.toString());
-                        intent.putExtra("PROJECT_DESC",projects.get(i).Description.toString());
-                        intent.putExtra("PROJECT_DEADLINE",projects.get(i).Deadline.toString());
-                        intent.putExtra("PROJECT_OWNER",projects.get(i).Owner);
+                        intent.putExtra("PROJECT_ID",projects.get(i).getId());
+                        intent.putExtra("PROJECT_NAME",projects.get(i).getName().toString());
+                        intent.putExtra("PROJECT_DESC",projects.get(i).getDescription().toString());
+                        intent.putExtra("PROJECT_DEADLINE",projects.get(i).getDeadline().toString());
+                        intent.putExtra("PROJECT_OWNER",projects.get(i).getOwner());
                     }
                 }
                 startActivity(intent);

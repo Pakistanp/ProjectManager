@@ -48,8 +48,8 @@ public class LoginActivity extends AppCompatActivity {
         ConnectionDetector cd = new ConnectionDetector(this);
         LoginChecker lc = new LoginChecker(this);
         User u = new User();
-        u.mail = login.getText().toString();
-        u.password = pass.getText().toString();
+        u.setMail(login.getText().toString());
+        u.setPassword(pass.getText().toString());
 
         if(!cd.isConnected()){
             Toast.makeText(LoginActivity.this,"Check your internet connection!",Toast.LENGTH_SHORT).show();
@@ -61,8 +61,8 @@ public class LoginActivity extends AppCompatActivity {
             else{
                 if(rememberMeCheckBox.isChecked()){
                     loginPrefsEditor.putBoolean("rememberMe", true);
-                    loginPrefsEditor.putString("mail", u.mail);
-                    loginPrefsEditor.putString("password", u.password);
+                    loginPrefsEditor.putString("mail", u.getMail());
+                    loginPrefsEditor.putString("password", u.getPassword());
                     loginPrefsEditor.commit();
                 }
                 else{
@@ -71,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 Intent intent;
                 intent = new Intent(LoginActivity.this,ProjectsActivity.class);
-                intent.putExtra("MAIL",u.mail);
+                intent.putExtra("MAIL",u.getMail());
                 startActivity(intent);
                 LoginActivity.this.finish();
             }

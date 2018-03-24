@@ -18,7 +18,7 @@ public class LoginChecker {
         UsersDatabaseHelper databaseHelper = UsersDatabaseHelper.getsInstance(context);
 
         //String test = databaseHelper.getPassword(user);
-        if(user.password.equals(databaseHelper.getPassword(user))){
+        if(user.getPassword().equals(databaseHelper.getPassword(user))){
             return true;
         }
         else{

@@ -5,6 +5,21 @@ package com.example.piotr.projectmanager.Model;
  */
 
 public class Contributor {
-    public int idUser;
-    public int idProj;
+    private int idUser;
+    private int idProj;
+
+    public int getIdUser() {
+        return idUser;
+    }
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
+    }
+
+    public int getIdProj() {
+        return idProj;
+    }
+
+    public void setIdProj(int idProj) {
+        this.idProj = idProj;
+    }
 }

@@ -27,19 +27,19 @@ public class ProjectMoreActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        final Project project =new Project();
-        project.Name = getIntent().getStringExtra("PROJECT_NAME");
-        project.Deadline = getIntent().getStringExtra("PROJECT_DEADLINE");
-        project.Description = getIntent().getStringExtra("PROJECT_DESC");
+        final Project project = new Project();
+        project.setName(getIntent().getStringExtra("PROJECT_NAME"));
+        project.setDeadline(getIntent().getStringExtra("PROJECT_DEADLINE"));
+        project.setDescription(getIntent().getStringExtra("PROJECT_DESC"));
 
-        setTitle(project.Name);
+        setTitle(project.getName());
 
         final TextView desc = (TextView) findViewById(R.id.textViewDescriptionText);
         final TextView deadline = (TextView) findViewById(R.id.textViewDeadlineDate);
         final ProgressBar progress = (ProgressBar) findViewById(R.id.progressBar);
 
-        desc.setText(project.Description);
-        deadline.setText(project.Deadline);
+        desc.setText(project.getDescription());
+        deadline.setText(project.getDeadline());
         progress.setProgress(20);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

@@ -60,16 +60,16 @@ public class NewProjectActivity extends AppCompatActivity {
         UsersDatabaseHelper db = new UsersDatabaseHelper(this);
         EditText editText = (EditText) findViewById(R.id.editTextPName);
         Project newProject = new Project();
-        newProject.Name = editText.getText().toString();
+        newProject.setName(editText.getText().toString());
         editText = (EditText) findViewById(R.id.editTextDescription);
-        newProject.Description = editText.getText().toString();
+        newProject.setDescription(editText.getText().toString());
         editText = (EditText) findViewById(R.id.editTextDeadline);
-        newProject.Deadline = editText.getText().toString();
+        newProject.setDeadline(editText.getText().toString());
         Contributor newContributor = new Contributor();
-        newProject.Owner = db.getUserId(userMail);
-        newContributor.idProj = (int)db.addOrUpdateProject(newProject);
+        newProject.setOwner(db.getUserId(userMail));
+        newContributor.setIdProj((int)db.addOrUpdateProject(newProject));
         for(int i =0;i<contributors_list.size();i++){
-            newContributor.idUser = db.getUserId(contributors_list.get(i));
+            newContributor.setIdUser(db.getUserId(contributors_list.get(i)));
             db.addContributor(newContributor);
         }
         finish();

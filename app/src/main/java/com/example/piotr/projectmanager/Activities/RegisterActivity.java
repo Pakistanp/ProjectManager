@@ -33,10 +33,10 @@ public class RegisterActivity extends AppCompatActivity {
         password = (EditText) findViewById(R.id.editTextPassword);
         UsersDatabaseHelper databaseHelper = new UsersDatabaseHelper(view.getContext());
         User u = new User();
-        u.mail = mail.getText().toString();
-        u.firstName = firstN.getText().toString();
-        u.secondName = secondN.getText().toString();
-        u.password = password.getText().toString();
+        u.setMail(mail.getText().toString());
+        u.setFirstName(firstN.getText().toString());
+        u.setSecondName(secondN.getText().toString());
+        u.setPassword(password.getText().toString());
 
         databaseHelper.addOrUpdateUser(u);
         finish();

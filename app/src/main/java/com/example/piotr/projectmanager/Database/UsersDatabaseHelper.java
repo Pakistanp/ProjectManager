@@ -154,7 +154,7 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
                         TABLE_USERS,
                         TABLE_USERS,
                         KEY_USER_MAIL,
-                        user.mail
+                        user.getMail()
                         );
 
         SQLiteDatabase db = getReadableDatabase();
@@ -162,7 +162,7 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
         try{
             if(cursor.moveToFirst()){
                 User newUser = new User();
-                newUser.password = cursor.getString(0);
+                newUser.setPassword(cursor.getString(0));
                 selectUser = newUser;
             }
             else{
@@ -175,7 +175,7 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
                 cursor.close();
             }
         }
-        return selectUser.password;
+        return selectUser.getPassword();
     }
 
     public long addOrUpdateUser(User user){
@@ -184,18 +184,18 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
         db.beginTransaction();
         try{
             ContentValues values = new ContentValues();
-            values.put(KEY_USER_MAIL, user.mail);
-            values.put(KEY_USER_FIRST_NAME, user.firstName);
-            values.put(KEY_USER_SECOND_NAME, user.secondName);
-            values.put(KEY_USER_PASSWORD, user.password);
+            values.put(KEY_USER_MAIL, user.getMail());
+            values.put(KEY_USER_FIRST_NAME, user.getFirstName());
+            values.put(KEY_USER_SECOND_NAME, user.getSecondName());
+            values.put(KEY_USER_PASSWORD, user.getPassword());
 
-            int rows = db.update(TABLE_USERS,values,KEY_USER_MAIL + "=?",new String[]{user.firstName});
+            int rows = db.update(TABLE_USERS,values,KEY_USER_MAIL + "=?",new String[]{user.getFirstName()});
 
             if(rows == 1){
                 String usersSelectQuery = String.format("SELECT %s FROM %s WHERE %s = ?",
                         KEY_USER_ID,TABLE_USERS,KEY_USER_MAIL
                 );
-             Cursor cursor = db.rawQuery(usersSelectQuery, new String[]{String.valueOf(user.mail)});
+             Cursor cursor = db.rawQuery(usersSelectQuery, new String[]{String.valueOf(user.getMail())});
              try{
                  if(cursor.moveToFirst()){
                      userId = cursor.getInt(0);
@@ -223,18 +223,18 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
         db.beginTransaction();
         try{
             ContentValues values = new ContentValues();
-            values.put(KEY_PROJECT_NAME,project.Name);
-            values.put(KEY_PROJECT_DESCRIPTION,project.Description);
-            values.put(KEY_PROJECT_DEADLINE, String.valueOf(project.Deadline));
-            values.put(KEY_PROJECT_OWNER, String.valueOf(project.Owner));
+            values.put(KEY_PROJECT_NAME,project.getName());
+            values.put(KEY_PROJECT_DESCRIPTION,project.getDescription());
+            values.put(KEY_PROJECT_DEADLINE, String.valueOf(project.getDeadline()));
+            values.put(KEY_PROJECT_OWNER, String.valueOf(project.getOwner()));
 
-            int rows = db.update(TABLE_PROJECTS,values,KEY_PROJECT_NAME + "=?",new String[]{project.Name});
+            int rows = db.update(TABLE_PROJECTS,values,KEY_PROJECT_NAME + "=?",new String[]{project.getName()});
 
             if (rows == 1){
                 String projectSelectQuery = String.format("SELECT %s FROM %s WHERE %s = ?",
                         KEY_PROJECT_ID,TABLE_PROJECTS,KEY_PROJECT_NAME
                 );
-                Cursor cursor = db.rawQuery(projectSelectQuery,new String[]{String.valueOf(project.Name)});
+                Cursor cursor = db.rawQuery(projectSelectQuery,new String[]{String.valueOf(project.getName())});
                 try{
                     if(cursor.moveToFirst()){
                         projectId = cursor.getInt(0);
@@ -263,8 +263,8 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
         db.beginTransaction();
         try{
             ContentValues values = new ContentValues();
-            values.put(KEY_ID_USER,contributor.idUser);
-            values.put(KEY_ID_PROJ,contributor.idProj);
+            values.put(KEY_ID_USER,contributor.getIdUser());
+            values.put(KEY_ID_PROJ,contributor.getIdProj());
 
             idProj = db.insertOrThrow(TABLE_CONTRIBUTORS,null,values);
             db.setTransactionSuccessful();
@@ -335,11 +335,11 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
             if (cursor.moveToFirst()) {
                 do {
                     Project newProject = new Project();
-                    newProject.Id = cursor.getInt(cursor.getColumnIndex(KEY_PROJECT_ID));
-                    newProject.Name = cursor.getString(cursor.getColumnIndex(KEY_PROJECT_NAME));
-                    newProject.Description = cursor.getString(cursor.getColumnIndex(KEY_PROJECT_DESCRIPTION));
-                    newProject.Owner = cursor.getInt(cursor.getColumnIndex(KEY_PROJECT_OWNER));
-                    newProject.Deadline = cursor.getString(cursor.getColumnIndex(KEY_PROJECT_DEADLINE));
+                    newProject.setId(cursor.getInt(cursor.getColumnIndex(KEY_PROJECT_ID)));
+                    newProject.setName(cursor.getString(cursor.getColumnIndex(KEY_PROJECT_NAME)));
+                    newProject.setDescription(cursor.getString(cursor.getColumnIndex(KEY_PROJECT_DESCRIPTION)));
+                    newProject.setOwner(cursor.getInt(cursor.getColumnIndex(KEY_PROJECT_OWNER)));
+                    newProject.setDeadline(cursor.getString(cursor.getColumnIndex(KEY_PROJECT_DEADLINE)));
                     projects.add(newProject);
                 } while (cursor.moveToNext());
             }
@@ -386,11 +386,11 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
             if (cursor.moveToFirst()) {
                 do {
                     Project newProject = new Project();
-                    newProject.Id = cursor.getInt(cursor.getColumnIndex(KEY_PROJECT_ID));
-                    newProject.Name = cursor.getString(cursor.getColumnIndex(KEY_PROJECT_NAME));
-                    newProject.Description = cursor.getString(cursor.getColumnIndex(KEY_PROJECT_DESCRIPTION));
-                    newProject.Owner = cursor.getInt(cursor.getColumnIndex(KEY_PROJECT_OWNER));
-                    newProject.Deadline = cursor.getString(cursor.getColumnIndex(KEY_PROJECT_DEADLINE));
+                    newProject.setId(cursor.getInt(cursor.getColumnIndex(KEY_PROJECT_ID)));
+                    newProject.setName(cursor.getString(cursor.getColumnIndex(KEY_PROJECT_NAME)));
+                    newProject.setDescription(cursor.getString(cursor.getColumnIndex(KEY_PROJECT_DESCRIPTION)));
+                    newProject.setOwner(cursor.getInt(cursor.getColumnIndex(KEY_PROJECT_OWNER)));
+                    newProject.setDeadline(cursor.getString(cursor.getColumnIndex(KEY_PROJECT_DEADLINE)));
                     projects.add(newProject);
                 } while (cursor.moveToNext());
             }
@@ -410,17 +410,17 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
         db.beginTransaction();
         try{
             ContentValues values = new ContentValues();
-            values.put(KEY_TASK_NAME,task.Name);
-            values.put(KEY_TASK_DESCRIPTION,task.Description);
-            values.put(KEY_TASK_STATUS,task.Status);
-            values.put(KEY_TASK_WHO_FINISH,task.WhoFinish);
+            values.put(KEY_TASK_NAME,task.getName());
+            values.put(KEY_TASK_DESCRIPTION,task.getDescription());
+            values.put(KEY_TASK_STATUS,task.isStatus());
+            values.put(KEY_TASK_WHO_FINISH,task.getWhoFinish());
 
-            int rows = db.update(TABLE_TASKS,values,KEY_TASK_NAME +  "=?", new String[]{task.Name});
+            int rows = db.update(TABLE_TASKS,values,KEY_TASK_NAME +  "=?", new String[]{task.getName()});
 
             if(rows == 1){
                 String taskSelectQuery = String.format("SELECT %s FROM %s WHERE %s = ?",
                         KEY_TASK_ID,TABLE_TASKS,KEY_TASK_NAME);
-                Cursor cursor = db.rawQuery(taskSelectQuery,new String[]{String.valueOf(task.Name)});
+                Cursor cursor = db.rawQuery(taskSelectQuery,new String[]{String.valueOf(task.getName())});
                 try{
                     if(cursor.moveToFirst()){
                         taskId = cursor.getInt(0);

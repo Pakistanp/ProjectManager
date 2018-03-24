@@ -7,9 +7,49 @@ import java.util.Date;
  */
 
 public class Project {
-    public int Id;
-    public String Name;
-    public String Description;
-    public String Deadline;
-    public int Owner;
+    private int Id;
+    private String Name;
+    private String Description;
+    private String Deadline;
+    private int Owner;
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        Id = id;
+    }
+
+    public String getName() {
+        return Name;
+    }
+
+    public void setName(String name) {
+        Name = name;
+    }
+
+    public String getDescription() {
+        return Description;
+    }
+
+    public void setDescription(String description) {
+        Description = description;
+    }
+
+    public String getDeadline() {
+        return Deadline;
+    }
+
+    public void setDeadline(String deadline) {
+        Deadline = deadline;
+    }
+
+    public int getOwner() {
+        return Owner;
+    }
+
+    public void setOwner(int owner) {
+        Owner = owner;
+    }
 }

@@ -8,10 +8,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.piotr.projectmanager.Database.UsersDatabaseHelper;
+import com.example.piotr.projectmanager.Model.Task;
 import com.example.piotr.projectmanager.R;
 
 public class NewTaskActivity extends AppCompatActivity {
 
+    private EditText Name;
+    private EditText Description;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,8 +23,21 @@ public class NewTaskActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        EditText Name = (EditText)findViewById(R.id.editTextTName);
-        EditText Description = (EditText)findViewById(R.id.editTextTDescription);
+        Name = (EditText)findViewById(R.id.editTextTName);
+        Description = (EditText)findViewById(R.id.editTextTDescription);
+
+
     }
 
+    public void clickCreateTask(View view) {
+        Task task = new Task();
+        task.setName(Name.getText().toString());
+        task.setDescription(Description.getText().toString());
+        task.setStatus(false);
+        task.setWhoFinish(-1);
+        UsersDatabaseHelper db = new UsersDatabaseHelper(this);
+
+        db.addOrUpdateTask(task);
+
+    }
 }
