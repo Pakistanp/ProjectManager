@@ -29,10 +29,6 @@ public class ProjectMoreActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         final Project project = (Project)(getIntent().getSerializableExtra("PROJECT"));
-        /*project.setName(getIntent().getStringExtra("PROJECT_NAME"));
-        project.setDeadline(getIntent().getStringExtra("PROJECT_DEADLINE"));
-        project.setDescription(getIntent().getStringExtra("PROJECT_DESC"));
-        project.setId(getIntent().getIntExtra("PROJECT_ID",-1));*/
 
         setTitle(project.getName());
 
@@ -43,6 +39,8 @@ public class ProjectMoreActivity extends AppCompatActivity {
         desc.setText(project.getDescription());
         deadline.setText(project.getDeadline());
         progress.setProgress(20);
+
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

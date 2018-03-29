@@ -465,4 +465,46 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
         }
         return idTask;
     }
+    public List<Task> getTasks(int projectId) {
+        List<Task> tasks = new ArrayList<>();
+        String TASKS_SELECT = String.format("SELECT * FROM %s INNER JOIN %s ON  %s.%s = %s.%s" +
+                        "INNER JOIN %s ON %s.%s = %s.%s" +
+                        "WHERE %s.%s='%s'",
+                TABLE_TASKS,
+                TABLE_PROJ_TASK,
+                TABLE_TASKS,
+                KEY_TASK_ID,
+                KEY_PROJ_TASK_ID_TASK,
+                TABLE_PROJECTS,
+                TABLE_PROJ_TASK,
+                KEY_PROJ_TASK_ID_PROJ,
+                TABLE_PROJECTS,
+                KEY_PROJECT_ID,
+                TABLE_PROJECTS,
+                KEY_PROJECT_ID,
+                projectId
+                );
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(TASKS_SELECT, null);
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    Task newTask = new Task();
+                    newTask.setName(cursor.getString(cursor.getColumnIndex(KEY_TASK_NAME)));
+                    newTask.setDescription(cursor.getString(cursor.getColumnIndex(KEY_TASK_DESCRIPTION)));
+                    newTask.setStatus(Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(KEY_TASK_STATUS))));
+                    newTask.setWhoFinish(cursor.getInt(cursor.getColumnIndex(KEY_TASK_WHO_FINISH)));
+                    tasks.add(newTask);
+                }while(cursor.moveToNext());
+            }
+        }catch (Exception e){
+            Log.d("Database","Problem while trying get tasks");
+        }finally {
+            if (cursor != null && !cursor.isClosed()){
+                cursor.close();
+            }
+        }
+        return tasks;
+    }
 }
