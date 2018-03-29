@@ -36,13 +36,14 @@ public class NewTaskActivity extends AppCompatActivity {
         task.setName(name.getText().toString());
         task.setDescription(description.getText().toString());
         task.setStatus(false);
-        task.setWhoFinish(-1);
+        task.setWhoFinish(0);
 
         UsersDatabaseHelper db = new UsersDatabaseHelper(this);
 
         Proj_Task proj_task = new Proj_Task();
         proj_task.setId_proj(projectId);
         proj_task.setId_task((int)db.addOrUpdateTask(task));
+        db.addOrUpdateTask(task);
         db.addProjTask(proj_task);
         db.close();
         finish();

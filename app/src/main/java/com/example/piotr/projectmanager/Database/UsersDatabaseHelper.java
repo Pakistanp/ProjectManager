@@ -414,7 +414,7 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
             values.put(KEY_TASK_NAME,task.getName());
             values.put(KEY_TASK_DESCRIPTION,task.getDescription());
             values.put(KEY_TASK_STATUS,task.isStatus());
-            values.put(KEY_TASK_WHO_FINISH,task.getWhoFinish());
+            //values.put(KEY_TASK_WHO_FINISH,task.getWhoFinish());
 
             int rows = db.update(TABLE_TASKS,values,KEY_TASK_NAME +  "=?", new String[]{task.getName()});
 
@@ -467,22 +467,30 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
     }
     public List<Task> getTasks(int projectId) {
         List<Task> tasks = new ArrayList<>();
-        String TASKS_SELECT = String.format("SELECT * FROM %s INNER JOIN %s ON  %s.%s = %s.%s" +
-                        "INNER JOIN %s ON %s.%s = %s.%s" +
-                        "WHERE %s.%s='%s'",
-                TABLE_TASKS,
-                TABLE_PROJ_TASK,
-                TABLE_TASKS,
-                KEY_TASK_ID,
-                KEY_PROJ_TASK_ID_TASK,
-                TABLE_PROJECTS,
-                TABLE_PROJ_TASK,
-                KEY_PROJ_TASK_ID_PROJ,
-                TABLE_PROJECTS,
-                KEY_PROJECT_ID,
-                TABLE_PROJECTS,
-                KEY_PROJECT_ID,
-                projectId
+        String TASKS_SELECT =
+                String.format("SELECT %s.%s, %s.%s, %s.%s FROM %s INNER JOIN %s ON %s.%s = %s.%s" +
+                                " INNER JOIN %s ON %s.%s = %s.%s" +
+                                " WHERE %s.%s = '%s'",
+                        TABLE_TASKS,
+                        KEY_TASK_NAME,
+                        TABLE_TASKS,
+                        KEY_TASK_DESCRIPTION,
+                        TABLE_TASKS,
+                        KEY_TASK_STATUS,
+                        TABLE_TASKS,
+                        TABLE_PROJ_TASK,
+                        TABLE_PROJ_TASK,
+                        KEY_PROJ_TASK_ID_TASK,
+                        TABLE_TASKS,
+                        KEY_TASK_ID,
+                        TABLE_PROJECTS,
+                        TABLE_PROJECTS,
+                        KEY_PROJECT_ID,
+                        TABLE_PROJ_TASK,
+                        KEY_PROJ_TASK_ID_PROJ,
+                        TABLE_PROJECTS,
+                        KEY_PROJECT_ID,
+                        projectId
                 );
 
         SQLiteDatabase db = getReadableDatabase();
@@ -494,7 +502,8 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
                     newTask.setName(cursor.getString(cursor.getColumnIndex(KEY_TASK_NAME)));
                     newTask.setDescription(cursor.getString(cursor.getColumnIndex(KEY_TASK_DESCRIPTION)));
                     newTask.setStatus(Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(KEY_TASK_STATUS))));
-                    newTask.setWhoFinish(cursor.getInt(cursor.getColumnIndex(KEY_TASK_WHO_FINISH)));
+                    //if whofinish not null ??
+                    newTask.setWhoFinish(-1);
                     tasks.add(newTask);
                 }while(cursor.moveToNext());
             }
