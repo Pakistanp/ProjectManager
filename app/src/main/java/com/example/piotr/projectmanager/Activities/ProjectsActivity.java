@@ -22,6 +22,7 @@ import com.example.piotr.projectmanager.Model.Project;
 import com.example.piotr.projectmanager.R;
 import com.google.gson.Gson;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -136,11 +137,12 @@ public class ProjectsActivity extends AppCompatActivity {
                 for(int i = 0;i<projects.size();i++){
                     if(projects_id.get(i) == projects_id.get(position)){
 
-                        intent.putExtra("PROJECT_ID",projects.get(i).getId());
+                        intent.putExtra("PROJECT",projects.get(position));
+                       /*intent.putExtra("PROJECT_ID",projects.get(i).getId());
                         intent.putExtra("PROJECT_NAME",projects.get(i).getName().toString());
                         intent.putExtra("PROJECT_DESC",projects.get(i).getDescription().toString());
                         intent.putExtra("PROJECT_DEADLINE",projects.get(i).getDeadline().toString());
-                        intent.putExtra("PROJECT_OWNER",projects.get(i).getOwner());
+                        intent.putExtra("PROJECT_OWNER",projects.get(i).getOwner());*/
                     }
                 }
                 startActivity(intent);

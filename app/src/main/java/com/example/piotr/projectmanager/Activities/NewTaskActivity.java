@@ -28,7 +28,6 @@ public class NewTaskActivity extends AppCompatActivity {
 
         name = (EditText)findViewById(R.id.editTextTName);
         description = (EditText)findViewById(R.id.editTextTDescription);
-        //button = (Button)findViewById(R.id.buttonCreateTask);
     }
 
     public void clickCreateTask(View view) {
@@ -45,6 +44,7 @@ public class NewTaskActivity extends AppCompatActivity {
         proj_task.setId_proj(projectId);
         proj_task.setId_task((int)db.addOrUpdateTask(task));
         db.addProjTask(proj_task);
+        db.close();
         finish();
     }
 }

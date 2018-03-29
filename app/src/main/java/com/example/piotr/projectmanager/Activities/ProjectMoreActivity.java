@@ -2,6 +2,7 @@ package com.example.piotr.projectmanager.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -27,11 +28,11 @@ public class ProjectMoreActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        final Project project = new Project();
-        project.setName(getIntent().getStringExtra("PROJECT_NAME"));
+        final Project project = (Project)(getIntent().getSerializableExtra("PROJECT"));
+        /*project.setName(getIntent().getStringExtra("PROJECT_NAME"));
         project.setDeadline(getIntent().getStringExtra("PROJECT_DEADLINE"));
         project.setDescription(getIntent().getStringExtra("PROJECT_DESC"));
-        project.setId(getIntent().getIntExtra("PROJECT_ID",-1));
+        project.setId(getIntent().getIntExtra("PROJECT_ID",-1));*/
 
         setTitle(project.getName());
 

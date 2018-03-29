@@ -1,12 +1,12 @@
 package com.example.piotr.projectmanager.Model;
 
-import java.util.Date;
+import java.io.Serializable;
 
 /**
  * Created by Piotr on 05.03.2018.
  */
 
-public class Project {
+public class Project implements Serializable {
     private int Id;
     private String Name;
     private String Description;
