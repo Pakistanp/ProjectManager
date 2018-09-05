@@ -48,9 +48,13 @@ public class NewProjectActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                contributors_list.add(editText.getText().toString());
-                Component.setListViewHeight(lv);
-                arrayAdapter.notifyDataSetChanged();
+                if(!editText.getText().toString().equals("")) {
+                    contributors_list.add(editText.getText().toString());
+                    Component.setListViewHeight(lv);
+                    arrayAdapter.notifyDataSetChanged();
+                }
+                else
+                    Toast.makeText(NewProjectActivity.this,"First fill this field!",Toast.LENGTH_SHORT).show();
                 editText.setText("");
             }
         });
