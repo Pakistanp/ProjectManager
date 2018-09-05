@@ -1,14 +1,17 @@
 package com.example.piotr.projectmanager.Model;
 
+import java.io.Serializable;
+
 /**
  * Created by Piotr on 18.03.2018.
  */
 
-public class Task {
+public class Task implements Serializable {
     private String Name;
     private String Description;
     private boolean Status;
     private int WhoFinish;
+    private int Id;
 
     public String getName() {
         return Name;
@@ -41,4 +44,12 @@ public class Task {
     public void setWhoFinish(int whoFinish) {
         WhoFinish = whoFinish;
     }
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        Id = id;
+    }
+
 }
