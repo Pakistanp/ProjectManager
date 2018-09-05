@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 
+import com.example.piotr.projectmanager.AESCrypt;
 import com.example.piotr.projectmanager.Database.UsersDatabaseHelper;
 import com.example.piotr.projectmanager.Model.User;
 import com.example.piotr.projectmanager.R;
@@ -36,7 +37,11 @@ public class RegisterActivity extends AppCompatActivity {
         u.setMail(mail.getText().toString());
         u.setFirstName(firstN.getText().toString());
         u.setSecondName(secondN.getText().toString());
-        u.setPassword(password.getText().toString());
+        try {
+            u.setPassword(AESCrypt.encrypt(password.getText().toString()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         databaseHelper.addOrUpdateUser(u);
         finish();

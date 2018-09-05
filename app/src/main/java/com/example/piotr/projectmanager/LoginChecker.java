@@ -14,11 +14,11 @@ public class LoginChecker {
 
     public LoginChecker(Context context){this.context = context;}
 
-    public boolean isCorrect(User user){
+    public boolean isCorrect(User user) throws Exception {
         UsersDatabaseHelper databaseHelper = UsersDatabaseHelper.getsInstance(context);
 
         //String test = databaseHelper.getPassword(user);
-        if(user.getPassword().equals(databaseHelper.getPassword(user))){
+        if(user.getPassword().equals(AESCrypt.decrypt(databaseHelper.getPassword(user)))){
             return true;
         }
         else{

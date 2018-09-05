@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public void clickSignIn(View view) {
+    public void clickSignIn(View view) throws Exception {
         ConnectionDetector cd = new ConnectionDetector(this);
         LoginChecker lc = new LoginChecker(this);
         User u = new User();
