@@ -1,5 +1,6 @@
 package com.example.piotr.projectmanager.Activities;
 
+import android.arch.lifecycle.Lifecycle;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -33,6 +34,15 @@ public class TaskMoreActivity extends AppCompatActivity {
         setTitle(task.getName());
         desc.setText(task.getDescription());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = getIntent();
+                intent.putExtra("PROJECT",project);
+                setResult(1, intent);
+                finish();
+            }
+        });
     }
 
     public void clickFinishTask(View view) {
@@ -47,6 +57,13 @@ public class TaskMoreActivity extends AppCompatActivity {
             intent.putExtra("PROJECT",project);
             setResult(1, intent);
             finish();
-        }
+    }
+    }
+    @Override
+    public void onBackPressed() {
+        Intent intent = getIntent();
+        intent.putExtra("PROJECT",project);
+        setResult(1, intent);
+        super.onBackPressed();
     }
 }
