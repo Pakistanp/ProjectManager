@@ -29,20 +29,33 @@ public class ProjectMoreActivity extends AppCompatActivity {
     private ListView listView;
     private ArrayAdapter<String> arrayAdapter;
     private List<String> tasks_list;
+    private Project currentProject;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_project_more);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-    }
 
+        final Project project = (Project)(getIntent().getSerializableExtra("PROJECT"));
+        if(project != null) {
+            setTitle(project.getName());
+            currentProject = project;
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK ) {
+            Project object = (Project)(data.getSerializableExtra("PROJECT"));
+            currentProject = object;
+        }
+    }
     @Override
     protected void onResume() {
         super.onResume();
-        final Project project = (Project)(getIntent().getSerializableExtra("PROJECT"));
 
-        setTitle(project.getName());
 
         final TextView desc = (TextView) findViewById(R.id.textViewDescriptionText);
         final TextView deadline = (TextView) findViewById(R.id.textViewDeadlineDate);
@@ -52,11 +65,11 @@ public class ProjectMoreActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listViewTasks);
 
         UsersDatabaseHelper db = new UsersDatabaseHelper(this);
-        final List<Task> tasks = db.getTasks(project.getId());
+        final List<Task> tasks = db.getTasks(currentProject.getId());
 
-        desc.setText(project.getDescription());
-        deadline.setText(project.getDeadline());
-        progress.setProgress(20);
+        desc.setText(currentProject.getDescription());
+        deadline.setText(currentProject.getDeadline());
+        progress.setProgress((Integer)Component.getAllFinishedTasksCount(tasks)*100/tasks.size());
 
         tasks_list = new ArrayList<String>();
         arrayAdapter = new ArrayAdapter<String>
@@ -77,6 +90,7 @@ public class ProjectMoreActivity extends AppCompatActivity {
                 for(int i = 0;i<tasks.size();i++){
                     if(tasks_id.get(i) == tasks_id.get(position)){
                         intent.putExtra("TASK",tasks.get(position));
+                        intent.putExtra("PROJECT",currentProject);
                     }
                 }
                 startActivity(intent);
@@ -87,7 +101,7 @@ public class ProjectMoreActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ProjectMoreActivity.this,NewTaskActivity.class);
-                intent.putExtra("PROJECT_ID",project.getId());
+                intent.putExtra("PROJECT_ID",currentProject.getId());
                 startActivity(intent);
             }
         });

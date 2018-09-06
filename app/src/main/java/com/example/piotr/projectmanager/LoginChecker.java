@@ -10,7 +10,7 @@ import com.example.piotr.projectmanager.Model.User;
  */
 
 public class LoginChecker {
-    Context context;
+    private Context context;
 
     public LoginChecker(Context context){this.context = context;}
 
@@ -18,7 +18,7 @@ public class LoginChecker {
         UsersDatabaseHelper databaseHelper = UsersDatabaseHelper.getsInstance(context);
 
         //String test = databaseHelper.getPassword(user);
-        if(user.getPassword().equals(AESCrypt.decrypt(databaseHelper.getPassword(user)))){
+        if(databaseHelper.getPassword(user) !=null && user.getPassword().equals(AESCrypt.decrypt(databaseHelper.getPassword(user)))){
             return true;
         }
         else{

@@ -501,7 +501,8 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
                     Task newTask = new Task();
                     newTask.setName(cursor.getString(cursor.getColumnIndex(KEY_TASK_NAME)));
                     newTask.setDescription(cursor.getString(cursor.getColumnIndex(KEY_TASK_DESCRIPTION)));
-                    newTask.setStatus(Boolean.parseBoolean(cursor.getString(cursor.getColumnIndex(KEY_TASK_STATUS))));
+                    int test = Integer.parseInt((cursor.getString(cursor.getColumnIndex(KEY_TASK_STATUS))));
+                    newTask.setStatus (test != 0);
                     //if whofinish not null ??
                     newTask.setWhoFinish(-1);
                     tasks.add(newTask);

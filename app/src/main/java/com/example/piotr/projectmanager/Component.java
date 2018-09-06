@@ -6,6 +6,10 @@ import android.view.View.MeasureSpec;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import com.example.piotr.projectmanager.Model.Task;
+
+import java.util.List;
+
 /**
  * Created by Piotr on 04.03.2018.
  */
@@ -25,5 +29,13 @@ public class Component {
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
         listView.requestLayout();
+    }
+    public static int getAllFinishedTasksCount(List<Task> tasks){
+        int count = 0;
+        for (Task task:tasks) {
+            if(task.isStatus())
+                count++;
+        }
+        return count;
     }
 }

@@ -28,4 +28,5 @@
     <string name="action_create_task">Create task</string>
     <string name="text_tasks">Tasks</string>
     <string name="title_activity_task_more">TaskMoreActivity</string>
+    <string name="text_finish_task">Finish Task</string>
 </resources>
