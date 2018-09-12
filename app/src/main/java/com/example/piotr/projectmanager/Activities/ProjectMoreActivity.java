@@ -1,12 +1,15 @@
 package com.example.piotr.projectmanager.Activities;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.style.StyleSpan;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -76,7 +79,12 @@ public class ProjectMoreActivity extends AppCompatActivity {
                 (this, android.R.layout.simple_list_item_1, tasks_list);
         listView.setAdapter(arrayAdapter);
         for(int i = 0;i<tasks.size();i++){
-            tasks_list.add(tasks.get(i).getName().toString());
+            if(tasks.get(i).isStatus()) {
+                //dodac italic do (finished)
+                tasks_list.add(tasks.get(i).getName().toString() + "(finished)");
+            }
+            else
+                tasks_list.add(tasks.get(i).getName().toString());
             tasks_id.add(tasks.get(i).getId());
             Component.setListViewHeight(listView);
             arrayAdapter.notifyDataSetChanged();
