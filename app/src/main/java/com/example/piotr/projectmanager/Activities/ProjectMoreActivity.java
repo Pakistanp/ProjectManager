@@ -10,6 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -20,6 +23,7 @@ import android.widget.TextView;
 
 import com.example.piotr.projectmanager.Component;
 import com.example.piotr.projectmanager.Database.UsersDatabaseHelper;
+import com.example.piotr.projectmanager.Model.Contributor;
 import com.example.piotr.projectmanager.Model.Project;
 import com.example.piotr.projectmanager.Model.Task;
 import com.example.piotr.projectmanager.R;
@@ -46,6 +50,12 @@ public class ProjectMoreActivity extends AppCompatActivity {
             setTitle(project.getName());
             currentProject = project;
         }
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.my_menu_project,menu);
+        return super.onCreateOptionsMenu(menu);
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -115,5 +125,11 @@ public class ProjectMoreActivity extends AppCompatActivity {
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    public void clickContributorsItem(MenuItem item) {
+        Intent intent = new Intent(ProjectMoreActivity.this,ContributorsActivity.class);
+        intent.putExtra("PROJECT",currentProject);
+        startActivity(intent);
     }
 }

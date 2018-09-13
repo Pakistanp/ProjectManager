@@ -18,6 +18,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.EventLog;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -103,6 +105,13 @@ public class ProjectsActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.my_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
     }
@@ -141,7 +150,7 @@ public class ProjectsActivity extends AppCompatActivity {
             Component.setListViewHeight(listView);
             arrayAdapter.notifyDataSetChanged();
             if(Component.compareDateWithCurrentDate(Component.stringToDate(projects.get(i).getDeadline().toString()))){
-                addAlarm(projects.get(i).getName().toString());
+                addAlarm(projects.get(i).getName().toString(),projects.get(i).getId());
             }
         }
     db.close();
@@ -183,7 +192,7 @@ public class ProjectsActivity extends AppCompatActivity {
         editor.commit();*/
     }
 
-    void addAlarm(String title){
+    void addAlarm(String title, int id){
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY,9);
@@ -192,6 +201,7 @@ public class ProjectsActivity extends AppCompatActivity {
 
         Intent intent = new Intent(getApplicationContext(),AlarmReciver.class);
         intent.putExtra("TITLE", title);
+        intent.putExtra("ID", id);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),100,intent,PendingIntent.FLAG_UPDATE_CURRENT);
 

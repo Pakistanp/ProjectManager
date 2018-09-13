@@ -27,10 +27,12 @@ public class AlarmReciver extends BroadcastReceiver {
                 .setSmallIcon(R.mipmap.ic_launcher) // notification icon
                 .setContentTitle(intent.getStringExtra("TITLE")) // title for notification
                 .setContentText("The time is up to the end of the project!")// message for notification
+                .setOnlyAlertOnce(true)
                 .setAutoCancel(true); // clear notification after click
         Intent intentA = new Intent(context, ProjectsActivity.class);
         PendingIntent pi = PendingIntent.getActivity(context, 0, intentA, PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(pi);
-        mNotificationManager.notify(100, mBuilder.build());
-    }
+        int i = intent.getIntExtra("ID",0);
+        mNotificationManager.notify(100 + i, mBuilder.build());
+}
 }

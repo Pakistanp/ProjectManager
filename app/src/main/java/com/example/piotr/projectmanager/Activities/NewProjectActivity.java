@@ -48,7 +48,8 @@ public class NewProjectActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!editText.getText().toString().equals("")) {
+                UsersDatabaseHelper db = new UsersDatabaseHelper(NewProjectActivity.this);
+                if(!editText.getText().toString().equals("") && db.getUserId(editText.getText().toString()) != 0) {
                     contributors_list.add(editText.getText().toString());
                     Component.setListViewHeight(lv);
                     arrayAdapter.notifyDataSetChanged();

@@ -517,4 +517,91 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
         }
         return tasks;
     }
+
+    public List<Contributor> getContributors(int id) {
+        List<Contributor> contributors = new ArrayList<>();
+        String CONTRIBUTORS_SELECT =
+                String.format("SELECT %s.%s, %s.%s FROM %s INNER JOIN %s ON %s.%s = %s.%s" +
+                                " INNER JOIN %s ON %s.%s = %s.%s" +
+                                " WHERE %s.%s = '%s'",
+                        TABLE_CONTRIBUTORS,
+                        KEY_ID_USER,
+                        TABLE_CONTRIBUTORS,
+                        KEY_ID_PROJ,
+                        TABLE_CONTRIBUTORS,
+                        TABLE_USERS,
+                        TABLE_USERS,
+                        KEY_USER_ID,
+                        TABLE_CONTRIBUTORS,
+                        KEY_ID_USER,
+                        TABLE_PROJECTS,
+                        TABLE_PROJECTS,
+                        KEY_PROJECT_ID,
+                        TABLE_CONTRIBUTORS,
+                        KEY_ID_PROJ,
+                        TABLE_PROJECTS,
+                        KEY_PROJECT_ID,
+                        id
+                );
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(CONTRIBUTORS_SELECT, null);
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    Contributor newContributor = new Contributor();
+                    newContributor.setIdUser(cursor.getInt(cursor.getColumnIndex(KEY_ID_USER)));
+                    newContributor.setIdProj(cursor.getInt(cursor.getColumnIndex(KEY_ID_PROJ)));
+                    contributors.add(newContributor);
+                }while(cursor.moveToNext());
+            }
+        }catch (Exception e){
+            Log.d("Database","Problem while trying get contributors");
+        }finally {
+            if (cursor != null && !cursor.isClosed()){
+                cursor.close();
+            }
+        }
+        return contributors;
+    }
+
+    public User getUserNames(int id) {
+        User selectUser = new User();
+
+        String USER_NAME_SELECT =
+                String.format("SELECT %s.%s, %s.%s, %s.%s, %s.%s FROM %s WHERE %s.%s = '%s'",
+                        TABLE_USERS,
+                        KEY_USER_FIRST_NAME,
+                        TABLE_USERS,
+                        KEY_USER_SECOND_NAME,
+                        TABLE_USERS,
+                        KEY_USER_PASSWORD,
+                        TABLE_USERS,
+                        KEY_USER_MAIL,
+                        TABLE_USERS,
+                        TABLE_USERS,
+                        KEY_USER_ID,
+                        id
+                );
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(USER_NAME_SELECT, null);
+        try {
+            if (cursor.moveToFirst()) {
+                User newUser = new User();
+                newUser.setFirstName(cursor.getString(cursor.getColumnIndex(KEY_USER_FIRST_NAME)));
+                newUser.setSecondName(cursor.getString(cursor.getColumnIndex(KEY_USER_SECOND_NAME)));
+                newUser.setPassword(cursor.getString(cursor.getColumnIndex(KEY_USER_PASSWORD)));
+                newUser.setMail(cursor.getString(cursor.getColumnIndex(KEY_USER_MAIL)));
+                selectUser = newUser;
+            }
+        }catch (Exception e){
+            Log.d("Database","Problem while trying get user names");
+        }finally {
+            if (cursor != null && !cursor.isClosed()){
+                cursor.close();
+            }
+        }
+        return selectUser;
+    }
 }

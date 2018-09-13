@@ -29,4 +29,5 @@
     <string name="text_tasks">Tasks</string>
     <string name="title_activity_task_more">TaskMoreActivity</string>
     <string name="text_finish_task">Finish Task</string>
+    <string name="title_activity_contributors">ContributorsActivity</string>
 </resources>
