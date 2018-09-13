@@ -8,6 +8,10 @@ import android.widget.ListView;
 
 import com.example.piotr.projectmanager.Model.Task;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,7 +19,7 @@ import java.util.List;
  */
 
 public class Component {
-    public static void setListViewHeight(ListView listView){
+    public static void setListViewHeight(ListView listView) {
         ListAdapter listAdapter = listView.getAdapter();
         int totalHeight = 0;
         int desiredWidth = MeasureSpec.makeMeasureSpec(listView.getWidth(), MeasureSpec.AT_MOST);
@@ -30,12 +34,41 @@ public class Component {
         listView.setLayoutParams(params);
         listView.requestLayout();
     }
-    public static int getAllFinishedTasksCount(List<Task> tasks){
+
+    public static int getAllFinishedTasksCount(List<Task> tasks) {
         int count = 0;
-        for (Task task:tasks) {
-            if(task.isStatus())
+        for (Task task : tasks) {
+            if (task.isStatus())
                 count++;
         }
         return count;
+    }
+
+    public static Date stringToDate(String dateString) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        Date convertedDate = new Date();
+                try
+
+        {
+            convertedDate = dateFormat.parse(dateString);
+        } catch(
+        ParseException e)
+
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return convertedDate;
+    }
+
+    public static boolean compareDateWithCurrentDate(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        Calendar curCal = Calendar.getInstance();
+        curCal.setTime(Calendar.getInstance().getTime());
+        if(cal.get(Calendar.YEAR) == curCal.get(Calendar.YEAR) && (cal.get(Calendar.DAY_OF_YEAR) - curCal.get(Calendar.DAY_OF_YEAR)) < 4)
+            return true;
+        else
+            return false;
     }
 }

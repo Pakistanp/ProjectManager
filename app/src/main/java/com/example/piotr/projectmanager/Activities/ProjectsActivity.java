@@ -1,5 +1,6 @@
 package com.example.piotr.projectmanager.Activities;
 
+import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -23,6 +24,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.piotr.projectmanager.AlarmReciver;
 import com.example.piotr.projectmanager.Component;
 import com.example.piotr.projectmanager.Database.UsersDatabaseHelper;
 import com.example.piotr.projectmanager.Model.Project;
@@ -30,9 +32,13 @@ import com.example.piotr.projectmanager.R;
 import com.google.gson.Gson;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 public class ProjectsActivity extends AppCompatActivity {
@@ -134,7 +140,9 @@ public class ProjectsActivity extends AppCompatActivity {
             projects_id.add(projects.get(i).getId());
             Component.setListViewHeight(listView);
             arrayAdapter.notifyDataSetChanged();
-            addNotification(i+100);
+            if(Component.compareDateWithCurrentDate(Component.stringToDate(projects.get(i).getDeadline().toString()))){
+                addAlarm(projects.get(i).getName().toString());
+            }
         }
     db.close();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -174,24 +182,21 @@ public class ProjectsActivity extends AppCompatActivity {
         editor.clear();
         editor.commit();*/
     }
-    void addNotification(int id) {
-        NotificationManager mNotificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel("default",
-                    "YOUR_CHANNEL_NAME",
-                    NotificationManager.IMPORTANCE_DEFAULT);
-            channel.setDescription("YOUR_NOTIFICATION_CHANNEL_DISCRIPTION");
-            mNotificationManager.createNotificationChannel(channel);
-        }
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getApplicationContext(), "default")
-                .setSmallIcon(R.mipmap.ic_launcher) // notification icon
-                .setContentTitle("asd") // title for notification
-                .setContentText("asdasdas")// message for notification
-                .setAutoCancel(true); // clear notification after click
-        Intent intent = new Intent(getApplicationContext(), ProjectsActivity.class);
-        PendingIntent pi = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        mBuilder.setContentIntent(pi);
-        mNotificationManager.notify(id, mBuilder.build());
+
+    void addAlarm(String title){
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY,9);
+        calendar.set(Calendar.MINUTE,30);
+        calendar.set(Calendar.SECOND,0);
+
+        Intent intent = new Intent(getApplicationContext(),AlarmReciver.class);
+        intent.putExtra("TITLE", title);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),100,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,pendingIntent);
+
     }
 }

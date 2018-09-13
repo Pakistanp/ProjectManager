@@ -72,7 +72,8 @@ public class ProjectMoreActivity extends AppCompatActivity {
 
         desc.setText(currentProject.getDescription());
         deadline.setText(currentProject.getDeadline());
-        progress.setProgress((Integer)(Component.getAllFinishedTasksCount(tasks)*100/tasks.size()));
+        if(tasks.size()>0)
+            progress.setProgress((Integer)(Component.getAllFinishedTasksCount(tasks)*100/tasks.size()));
 
         tasks_list = new ArrayList<String>();
         arrayAdapter = new ArrayAdapter<String>
