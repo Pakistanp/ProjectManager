@@ -8,8 +8,13 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -40,6 +45,7 @@ public class ContributorsActivity extends AppCompatActivity {
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>
                 (this, android.R.layout.simple_list_item_1, contributors_list);
         lv.setAdapter(arrayAdapter);
+        registerForContextMenu(lv);
 
         UsersDatabaseHelper db = new UsersDatabaseHelper(this);
         final List<Contributor> contributors = db.getContributors(project.getId());
@@ -115,5 +121,26 @@ public class ContributorsActivity extends AppCompatActivity {
         intent.putExtra("PROJECT",project);
         setResult(1, intent);
         super.onBackPressed();
+    }
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)
+    {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_contributor_long_click, menu);
+        menu.setHeaderTitle("Select The Action");
+        super.onCreateContextMenu(menu, v, menuInfo);
+    }
+    @Override
+    public boolean onContextItemSelected(MenuItem item){
+        if(item.getItemId()==R.id.action_delete_contributor){
+            deleteContributor(item.getItemId());
+        }
+        else{
+            return false;
+        }
+        return true;
+    }
+    void deleteContributor(int id){
+
     }
 }
