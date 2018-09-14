@@ -147,8 +147,8 @@ public class ProjectMoreActivity extends AppCompatActivity {
         alertDialogBulider.setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                UsersDatabaseHelper db = new UsersDatabaseHelper(ProjectMoreActivity.this);
-                db.close();
+                deleteProject(currentProject.getId());
+                finish();
             }
         })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -159,5 +159,13 @@ public class ProjectMoreActivity extends AppCompatActivity {
                 });
         AlertDialog alertDialog = alertDialogBulider.create();
         alertDialog.show();
+    }
+
+    private void deleteProject(int id) {
+        UsersDatabaseHelper db = new UsersDatabaseHelper(ProjectMoreActivity.this);
+        db.deleteAllContributorsFromProject(id);
+        db.deleteAllTasksFromProject(id);
+        db.deleteProject(id);
+        db.close();
     }
 }

@@ -618,13 +618,11 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
         }
         //return count > 0;
     }
-    public void deleteContributorsFromProject(int proj_id) {
+    public void deleteAllContributorsFromProject(int proj_id) {
         int count = -1;
         SQLiteDatabase db = getWritableDatabase();
         db.beginTransaction();
         try {
-            //flag -1 = delete one contributor from project
-            //flag 0 = delete all contributors from project
                 count = db.delete(TABLE_CONTRIBUTORS, KEY_ID_PROJ + "=" + proj_id, null);
             db.setTransactionSuccessful();
         } catch (Exception e) {
@@ -633,5 +631,31 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
             db.endTransaction();
         }
         //return count > 0;
+    }
+
+    public void deleteAllTasksFromProject(int id) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            db.delete(TABLE_PROJ_TASK, KEY_PROJ_TASK_ID_PROJ + "=" + id, null);
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d("Database", "Error while trying to delete all task from project");
+        } finally {
+            db.endTransaction();
+        }
+    }
+
+    public void deleteProject(int id) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            db.delete(TABLE_PROJECTS, KEY_PROJECT_ID + "=" + id, null);
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d("Database", "Error while trying to project");
+        } finally {
+            db.endTransaction();
+        }
     }
 }
