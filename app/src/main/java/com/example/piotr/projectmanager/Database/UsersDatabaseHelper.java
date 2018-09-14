@@ -658,4 +658,38 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
             db.endTransaction();
         }
     }
+
+    public boolean isContributor(String mail, int proj_id) {
+        int selectId = -1;
+        int user_id = getUserId(mail);
+        String CONTRIBUTOR_SELECT =
+                String.format("SELECT %s.%s FROM %s WHERE %s.%s = '%s' AND %s.%s = '%s'",
+                        TABLE_CONTRIBUTORS,
+                        KEY_ID_USER,
+                        TABLE_CONTRIBUTORS,
+                        TABLE_CONTRIBUTORS,
+                        KEY_ID_USER,
+                        user_id,
+                        TABLE_CONTRIBUTORS,
+                        KEY_ID_PROJ,
+                        proj_id
+                );
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(CONTRIBUTOR_SELECT,null);
+        try{
+            if(cursor.moveToFirst()){
+                selectId = cursor.getInt(0);
+            }
+            else{
+                Log.d("Database","nie trafil do ifa user");
+            }
+        }catch (Exception e){
+            Log.d("Database","Error while trying to get from database");
+        }finally {
+            if(cursor != null && !cursor.isClosed()){
+                cursor.close();
+            }
+        }
+        return selectId > 0;
+    }
 }

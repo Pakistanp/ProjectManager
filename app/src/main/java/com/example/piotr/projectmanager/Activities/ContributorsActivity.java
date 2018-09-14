@@ -89,15 +89,23 @@ public class ContributorsActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         UsersDatabaseHelper db = new UsersDatabaseHelper(ContributorsActivity.this);
-                        if(!userInput.getText().toString().equals("") && db.getUserId(userInput.getText().toString()) != 0) {
-                            contributors_list.add(userInput.getText().toString());
-                            Component.setListViewHeight(lv);
-                            arrayAdapter.notifyDataSetChanged();
+                        if(!userInput.getText().toString().equals("")) {
+                            if(db.getUserId(userInput.getText().toString()) != 0) {
+                                if(!db.isContributor(userInput.getText().toString(),project.getId())) {
+                                    contributors_list.add(userInput.getText().toString());
+                                    Component.setListViewHeight(lv);
+                                    arrayAdapter.notifyDataSetChanged();
 
-                            Contributor newContributor = new Contributor();
-                            newContributor.setIdProj(project.getId());
-                            newContributor.setIdUser(db.getUserId(userInput.getText().toString()));
-                            db.addContributor(newContributor);
+                                    Contributor newContributor = new Contributor();
+                                    newContributor.setIdProj(project.getId());
+                                    newContributor.setIdUser(db.getUserId(userInput.getText().toString()));
+                                    db.addContributor(newContributor);
+                                }
+                                else
+                                    Toast.makeText(ContributorsActivity.this,"This user is contributor already!",Toast.LENGTH_SHORT).show();
+                            }
+                            else
+                                Toast.makeText(ContributorsActivity.this,"User with this mail don't exist!",Toast.LENGTH_SHORT).show();
                         }
                         else
                             Toast.makeText(ContributorsActivity.this,"First fill this field!",Toast.LENGTH_SHORT).show();
