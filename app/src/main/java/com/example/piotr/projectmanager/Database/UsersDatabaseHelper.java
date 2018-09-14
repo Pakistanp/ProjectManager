@@ -692,4 +692,17 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
         }
         return selectId > 0;
     }
+
+    public void deleteTask(int task_id, int proj_id) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            db.delete(TABLE_PROJ_TASK, KEY_PROJ_TASK_ID_TASK + " = " + task_id + " AND " + KEY_PROJ_TASK_ID_PROJ + " = " + proj_id, null);
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d("Database", "Error while trying to delete tasks");
+        } finally {
+            db.endTransaction();
+        }
+    }
 }

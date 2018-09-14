@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -41,6 +42,7 @@ public class ProjectMoreActivity extends AppCompatActivity {
     private ArrayAdapter<String> arrayAdapter;
     private List<String> tasks_list;
     private Project currentProject;
+    private List<Task> tasks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +84,7 @@ public class ProjectMoreActivity extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listViewTasks);
 
         UsersDatabaseHelper db = new UsersDatabaseHelper(this);
-        final List<Task> tasks = db.getTasks(currentProject.getId());
+        tasks = db.getTasks(currentProject.getId());
 
         desc.setText(currentProject.getDescription());
         deadline.setText(currentProject.getDeadline());
@@ -93,6 +95,8 @@ public class ProjectMoreActivity extends AppCompatActivity {
         arrayAdapter = new ArrayAdapter<String>
                 (this, android.R.layout.simple_list_item_1, tasks_list);
         listView.setAdapter(arrayAdapter);
+        registerForContextMenu(listView);
+
         for(int i = 0;i<tasks.size();i++){
             if(tasks.get(i).isStatus()) {
                 //dodac italic do (finished)
@@ -166,6 +170,37 @@ public class ProjectMoreActivity extends AppCompatActivity {
         db.deleteAllContributorsFromProject(id);
         db.deleteAllTasksFromProject(id);
         db.deleteProject(id);
+        db.close();
+    }
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)
+    {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_contributor_long_click, menu);
+        super.onCreateContextMenu(menu, v, menuInfo);
+    }
+    @Override
+    public boolean onContextItemSelected(MenuItem item){
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+
+        if(item.getItemId()==R.id.action_delete_contributor){
+            deleteTask(info.position,tasks.get(info.position).getId());
+        }
+        else{
+            return false;
+        }
+        return true;
+    }
+
+    private void deleteTask(int position, int id) {
+        tasks_list.remove(position);
+        arrayAdapter.notifyDataSetChanged();
+        deleteTaskDatabase(id);
+    }
+
+    private void deleteTaskDatabase(int id) {
+        UsersDatabaseHelper db = new UsersDatabaseHelper(ProjectMoreActivity.this);
+        db.deleteTask(id,currentProject.getId());
         db.close();
     }
 }
