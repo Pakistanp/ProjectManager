@@ -468,9 +468,11 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
     public List<Task> getTasks(int projectId) {
         List<Task> tasks = new ArrayList<>();
         String TASKS_SELECT =
-                String.format("SELECT %s.%s, %s.%s, %s.%s FROM %s INNER JOIN %s ON %s.%s = %s.%s" +
+                String.format("SELECT %s.%s, %s.%s, %s.%s, %s.%s FROM %s INNER JOIN %s ON %s.%s = %s.%s" +
                                 " INNER JOIN %s ON %s.%s = %s.%s" +
                                 " WHERE %s.%s = '%s'",
+                        TABLE_TASKS,
+                        KEY_TASK_ID,
                         TABLE_TASKS,
                         KEY_TASK_NAME,
                         TABLE_TASKS,
@@ -499,6 +501,7 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
             if (cursor.moveToFirst()) {
                 do {
                     Task newTask = new Task();
+                    newTask.setId(cursor.getInt(cursor.getColumnIndex(KEY_TASK_ID)));
                     newTask.setName(cursor.getString(cursor.getColumnIndex(KEY_TASK_NAME)));
                     newTask.setDescription(cursor.getString(cursor.getColumnIndex(KEY_TASK_DESCRIPTION)));
                     int test = Integer.parseInt((cursor.getString(cursor.getColumnIndex(KEY_TASK_STATUS))));
