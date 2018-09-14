@@ -35,8 +35,12 @@ public class LoginActivity extends AppCompatActivity {
         loginPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
         loginPrefsEditor = loginPreferences.edit();
 
+        if(!getIntent().getBooleanExtra("remember",true)) {
+            loginPrefsEditor.clear();
+            loginPrefsEditor.commit();
+        }
         rememberMe = loginPreferences.getBoolean("rememberMe", false);
-        if(rememberMe == true && getIntent().getBooleanExtra("remember",true))
+        if(rememberMe == true )
         {
             login.setText(loginPreferences.getString("mail",""));
             pass.setText(loginPreferences.getString("password",""));
