@@ -150,7 +150,7 @@ public class ProjectsActivity extends AppCompatActivity {
             Component.setListViewHeight(listView);
             arrayAdapter.notifyDataSetChanged();
             if(Component.compareDateWithCurrentDate(Component.stringToDate(projects.get(i).getDeadline().toString()))){
-                addAlarm(projects.get(i).getName().toString(),projects.get(i).getId());
+               //addAlarm(projects.get(i).getName().toString(),projects.get(i).getId());
             }
         }
     db.close();

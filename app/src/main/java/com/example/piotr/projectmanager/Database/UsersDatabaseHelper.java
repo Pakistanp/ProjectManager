@@ -604,4 +604,34 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
         }
         return selectUser;
     }
+    public void deleteContributor(int user_id,int proj_id) {
+        int count = -1;
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            count = db.delete(TABLE_CONTRIBUTORS, KEY_ID_USER + " = " + user_id + " AND " + KEY_ID_PROJ + " = " + proj_id, null);
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d("Database", "Error while trying to delete contributors");
+        } finally {
+            db.endTransaction();
+        }
+        //return count > 0;
+    }
+    public void deleteContributorsFromProject(int proj_id) {
+        int count = -1;
+        SQLiteDatabase db = getWritableDatabase();
+        db.beginTransaction();
+        try {
+            //flag -1 = delete one contributor from project
+            //flag 0 = delete all contributors from project
+                count = db.delete(TABLE_CONTRIBUTORS, KEY_ID_PROJ + "=" + proj_id, null);
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d("Database", "Error while trying to delete contributors");
+        } finally {
+            db.endTransaction();
+        }
+        //return count > 0;
+    }
 }

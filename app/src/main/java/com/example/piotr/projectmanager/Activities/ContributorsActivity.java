@@ -33,6 +33,8 @@ import java.util.List;
 public class ContributorsActivity extends AppCompatActivity {
     private Project project;
     private List<String> contributors_list = new ArrayList<String>();
+    private List<Contributor> contributors = new ArrayList<Contributor>();
+    private ArrayAdapter<String> arrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,13 +44,13 @@ public class ContributorsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         project = (Project) (getIntent().getSerializableExtra("PROJECT"));
         final ListView lv = (ListView) findViewById(R.id.listViewContributors);
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>
+        arrayAdapter = new ArrayAdapter<String>
                 (this, android.R.layout.simple_list_item_1, contributors_list);
         lv.setAdapter(arrayAdapter);
         registerForContextMenu(lv);
 
         UsersDatabaseHelper db = new UsersDatabaseHelper(this);
-        final List<Contributor> contributors = db.getContributors(project.getId());
+        contributors = db.getContributors(project.getId());
         //final List<Integer> contributors_id = new ArrayList<Integer>();
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -64,7 +66,7 @@ public class ContributorsActivity extends AppCompatActivity {
             for (int i = 0; i < contributors.size(); i++) {
                 User user = new User();
                 user = db.getUserNames(contributors.get(i).getIdUser());
-                contributors_list.add(user.getFirstName() + user.getSecondName());
+                contributors_list.add(user.getFirstName()+ " " + user.getSecondName());
                 //contributors_id.add(contributors.get(i).getId());
                 Component.setListViewHeight(lv);
                 arrayAdapter.notifyDataSetChanged();
@@ -127,20 +129,28 @@ public class ContributorsActivity extends AppCompatActivity {
     {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_contributor_long_click, menu);
-        menu.setHeaderTitle("Select The Action");
         super.onCreateContextMenu(menu, v, menuInfo);
     }
     @Override
     public boolean onContextItemSelected(MenuItem item){
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+
         if(item.getItemId()==R.id.action_delete_contributor){
-            deleteContributor(item.getItemId());
+            deleteContributor(info.position,contributors.get(info.position).getIdUser());
         }
         else{
             return false;
         }
         return true;
     }
-    void deleteContributor(int id){
-
+    void deleteContributor(int positionToRemove, int id){
+        contributors_list.remove(positionToRemove);
+        arrayAdapter.notifyDataSetChanged();
+        deleteContributorDatabase(id);
+    }
+    void deleteContributorDatabase(int id){
+        UsersDatabaseHelper db = new UsersDatabaseHelper(ContributorsActivity.this);
+        db.deleteContributor(id,project.getId());
+        db.close();
     }
 }

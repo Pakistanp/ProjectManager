@@ -1,15 +1,18 @@
 package com.example.piotr.projectmanager.Activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,6 +23,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.piotr.projectmanager.Component;
 import com.example.piotr.projectmanager.Database.UsersDatabaseHelper;
@@ -131,5 +135,29 @@ public class ProjectMoreActivity extends AppCompatActivity {
         Intent intent = new Intent(ProjectMoreActivity.this,ContributorsActivity.class);
         intent.putExtra("PROJECT",currentProject);
         startActivity(intent);
+    }
+    public void clickDeleteItem(MenuItem item) {
+        LayoutInflater layoutInflater = LayoutInflater.from(ProjectMoreActivity.this);
+        View promptView = layoutInflater.inflate(R.layout.delete_prompt, null);
+
+        AlertDialog.Builder alertDialogBulider = new AlertDialog.Builder(ProjectMoreActivity.this);
+
+        alertDialogBulider.setView(promptView);
+
+        alertDialogBulider.setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                UsersDatabaseHelper db = new UsersDatabaseHelper(ProjectMoreActivity.this);
+                db.close();
+            }
+        })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+        AlertDialog alertDialog = alertDialogBulider.create();
+        alertDialog.show();
     }
 }
