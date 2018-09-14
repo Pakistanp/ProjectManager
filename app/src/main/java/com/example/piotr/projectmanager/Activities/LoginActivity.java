@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
         loginPrefsEditor = loginPreferences.edit();
 
         rememberMe = loginPreferences.getBoolean("rememberMe", false);
-        if(rememberMe == true)
+        if(rememberMe == true && getIntent().getBooleanExtra("remember",true))
         {
             login.setText(loginPreferences.getString("mail",""));
             pass.setText(loginPreferences.getString("password",""));
@@ -66,8 +66,8 @@ public class LoginActivity extends AppCompatActivity {
                     loginPrefsEditor.commit();
                 }
                 else{
-                    loginPrefsEditor.clear();
-                    loginPrefsEditor.commit();
+                   loginPrefsEditor.clear();
+                   loginPrefsEditor.commit();
                 }
                 Intent intent;
                 intent = new Intent(LoginActivity.this,ProjectsActivity.class);

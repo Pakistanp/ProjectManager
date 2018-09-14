@@ -5,6 +5,7 @@
         android:id="@+id/action_settings"
         android:title="Log Out"
         app:showAsAction="never"
+        android:onClick="clickLogout"
 
         />
 </menu>

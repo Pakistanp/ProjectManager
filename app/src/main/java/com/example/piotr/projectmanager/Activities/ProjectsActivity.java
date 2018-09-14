@@ -20,6 +20,7 @@ import android.util.EventLog;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -120,7 +121,7 @@ public class ProjectsActivity extends AppCompatActivity {
         super.onResume();
         listView = (ListView) findViewById(R.id.listViewProjects);
         userMail = getIntent().getStringExtra("MAIL");
-        settings = getSharedPreferences("prefs",MODE_PRIVATE);
+        settings = getSharedPreferences("loginPrefs",MODE_PRIVATE);
 
         if(userMail != null){
             editor = settings.edit();
@@ -208,5 +209,12 @@ public class ProjectsActivity extends AppCompatActivity {
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,pendingIntent);
 
+    }
+
+    public void clickLogout(MenuItem item) {
+        Intent intent = new Intent(ProjectsActivity.this, LoginActivity.class);
+        intent.putExtra("remember",false);
+        startActivity(intent);
+        finish();
     }
 }
