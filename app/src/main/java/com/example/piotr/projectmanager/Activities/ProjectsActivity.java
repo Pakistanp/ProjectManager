@@ -18,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.EventLog;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -211,10 +212,26 @@ public class ProjectsActivity extends AppCompatActivity {
 
     }
 
-    public void clickLogout(MenuItem item) {
+    public void Logout(MenuItem item) {
         Intent intent = new Intent(ProjectsActivity.this, LoginActivity.class);
         intent.putExtra("remember",false);
         startActivity(intent);
         finish();
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.action_settings){
+           Intent intent = new Intent(ProjectsActivity.this, SettingsActivity.class);
+           startActivity(intent);
+           return true;
+        }
+        else if(item.getItemId() == R.id.action_logout){
+            Logout(item);
+            return true;
+        }
+        else
+            return false;
     }
 }

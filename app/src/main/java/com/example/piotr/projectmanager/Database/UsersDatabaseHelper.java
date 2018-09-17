@@ -388,7 +388,7 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
                 do {
                     Project newProject = new Project();
                     newProject.setId(cursor.getInt(cursor.getColumnIndex(KEY_PROJECT_ID)));
-                    newProject.setName(cursor.getString(cursor.getColumnIndex(KEY_PROJECT_NAME)));
+                    newProject.setName(cursor.getString(cursor.getColumnIndex(KEY_PROJECT_NAME))+" (Guest)");
                     newProject.setDescription(cursor.getString(cursor.getColumnIndex(KEY_PROJECT_DESCRIPTION)));
                     newProject.setOwner(cursor.getInt(cursor.getColumnIndex(KEY_PROJECT_OWNER)));
                     newProject.setDeadline(cursor.getString(cursor.getColumnIndex(KEY_PROJECT_DEADLINE)));
@@ -707,5 +707,34 @@ public class UsersDatabaseHelper extends SQLiteOpenHelper {
         } finally {
             db.endTransaction();
         }
+    }
+    public boolean projectExist(int id){
+        int selectId = -1;
+        String PROJECT_SELECT =
+                String.format("SELECT %s.%s FROM %s WHERE %s.%s = '%s'",
+                        TABLE_PROJECTS,
+                        KEY_PROJECT_ID,
+                        TABLE_PROJECTS,
+                        TABLE_PROJECTS,
+                        KEY_PROJECT_ID,
+                        id
+                );
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(PROJECT_SELECT,null);
+        try{
+            if(cursor.moveToFirst()){
+                selectId = cursor.getInt(0);
+            }
+            else{
+                Log.d("Database","nie trafil do ifa user");
+            }
+        }catch (Exception e){
+            Log.d("Database","Error while trying to get from database");
+        }finally {
+            if(cursor != null && !cursor.isClosed()){
+                cursor.close();
+            }
+        }
+        return selectId > 0;
     }
 }

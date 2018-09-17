@@ -30,4 +30,7 @@
     <string name="title_activity_task_more">TaskMoreActivity</string>
     <string name="text_finish_task">Finish Task</string>
     <string name="title_activity_contributors">ContributorsActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

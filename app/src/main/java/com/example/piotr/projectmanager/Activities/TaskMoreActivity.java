@@ -50,6 +50,7 @@ public class TaskMoreActivity extends AppCompatActivity {
             Toast.makeText(TaskMoreActivity.this,"Task finished before",Toast.LENGTH_SHORT).show();
         else {
             taskU.setStatus(true);
+            //taskU.setWhoFinish();
             UsersDatabaseHelper databaseHelper = new UsersDatabaseHelper(view.getContext());
             databaseHelper.addOrUpdateTask(taskU);
             databaseHelper.close();

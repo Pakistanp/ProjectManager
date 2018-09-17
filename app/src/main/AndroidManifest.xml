@@ -89,6 +89,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.piotr.projectmanager.Activities.ProjectMoreActivity" />
         </activity>
+        <activity android:name=".Activities.SettingsActivity"
+            android:label="Settings"
+            android:parentActivityName=".Activities.ProjectsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activities.ProjectsActivity"/>
+        </activity>
     </application>
 
 </manifest>
