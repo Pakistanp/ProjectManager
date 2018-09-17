@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.provider.CalendarContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NotificationCompat;
@@ -62,48 +63,6 @@ public class ProjectsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_projects);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-        /*listView = (ListView) findViewById(R.id.listViewProjects);
-        final String userMail = getIntent().getStringExtra("MAIL");
-        UsersDatabaseHelper db = new UsersDatabaseHelper(this);
-        List<Project> projects = db.getAllProjects(userMail);
-        Collections.sort(projects, new Comparator<Project>() {
-            @Override
-            public int compare(final Project o1,final Project o2) {
-                return o1.Id > o2.Id ? -1 : (o1.Id < o2.Id) ? 1 : 0;
-            }
-        });
-        projects_list = new ArrayList<String>();
-        final List<Integer> projects_id = new ArrayList<Integer>();
-        arrayAdapter = new ArrayAdapter<String>
-                (this, android.R.layout.simple_list_item_1, projects_list);
-        listView.setAdapter(arrayAdapter);
-        for(int i = 0;i<projects.size();i++){
-            projects_list.add(projects.get(i).Name.toString());
-            projects_id.add(projects.get(i).Id);
-            Component.setListViewHeight(listView);
-            arrayAdapter.notifyDataSetChanged();
-        }
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(ProjectsActivity.this,projects_id.get((int)id).toString(),Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(ProjectsActivity.this,ProjectMoreActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ProjectsActivity.this,NewProjectActivity.class);
-                intent.putExtra("MAIL",userMail);
-                startActivity(intent);
-            }
-        });*/
     }
 
     @Override
@@ -231,7 +190,7 @@ public class ProjectsActivity extends AppCompatActivity {
             Logout(item);
             return true;
         }
-        else
-            return false;
+        return super.onOptionsItemSelected(item);
     }
+
 }
